@@ -3,7 +3,7 @@
 //solución 1 (primera forma de hacerlo)
 
 int f(int n){
-    return n*n+n+1;
+    return n*(n+1) + 1;
 }
 
 void print(int** matrix, int rows, int cols){
