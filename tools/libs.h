@@ -52,7 +52,7 @@ void init(bitset *msk, int size){
 
 
 
-//set(&a, 12);   sets the 12'th bit of msk to 1
+//set(&a, 12);   sets the 12'th bit of "a" to 1
 void set(bitset *msk, int i){
     msk->arr[i/32] = SET(msk->arr[i/32], i%32);
 }
@@ -60,7 +60,7 @@ void set(bitset *msk, int i){
 
 
 
-// test(&a, 13);    returns 0, if the 13'th bit of msk is 0
+// test(&a, 13);    returns 0, if the 13'th bit of "a" is 0
 int test(bitset *msk, int i){
     return TEST(msk->arr[i/32], i%32);
 }
