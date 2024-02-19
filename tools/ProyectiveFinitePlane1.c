@@ -1,6 +1,6 @@
 #include "libs.h"
 
-//solución 1 (primera forma de hacerlo)
+//resuelve los de orden primo
 
 int f(int n){
     return n*(n+1) + 1;
