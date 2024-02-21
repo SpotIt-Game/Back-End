@@ -5,7 +5,7 @@ LDFLAGS = -lm
 
 #variable
 TARGET = o
-SOURCES = #x.c
+SOURCES = FPP.c
 
 all: $(TARGET)
 
