@@ -4,6 +4,8 @@
 #define card bitset
 #define deck bitset*
 
+
+
 int n, order;
 deck mat;
 
@@ -31,7 +33,6 @@ void createFPP(){
 
     int * pts = copy(CDS[order-4], order);
     for(int i = 0; i<n; i++){
-
         for(int j = 0; j<order; j++)
             for(int k = 0; k<order; k++)
                 if(pts[j] != CDS[order-4][k]) 
