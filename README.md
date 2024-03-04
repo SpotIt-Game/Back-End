@@ -9,7 +9,7 @@ This repository contains the source code for a Spot It game implementation. Spot
 Before running and compiling, make sure you have the following programs installed on your linux system:
 
 1. **Node.js:**
-   - Install Node.js using the terminal:
+   - Install `nodejs` using the terminal:
      ```bash
      sudo apt install nodejs
      ```
