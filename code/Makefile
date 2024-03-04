@@ -1,10 +1,10 @@
-CC = gcc-13
+CC = gcc
 CFLAGS = -Wall -Wextra -std=c17
 LDFLAGS = -lm
 
 
 #variable
-TARGET = o
+TARGET = a.out
 SOURCES = FPP.c
 
 all: $(TARGET)
