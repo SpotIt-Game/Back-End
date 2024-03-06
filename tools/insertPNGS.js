@@ -26,33 +26,33 @@ connection.connect(err => {
   }
   console.log('Connected to the database with ID ' + connection.threadId);
 
-  // Path to the folder containing SVG files
-  const folderPath = '/home/danilo/SpotIT/code/Images/ComputerScience';
+  // Path to the folder containing PNG files
+  const folderPath = '/home/danilo-duque/SpotIT/code/Images/ComputerScience';
 
   // Read all files in the folder
   fs.readdir(folderPath, (err, files) => {
     if (err) throw err;
 
-    // Counter to track the number of SVG files processed
+    // Counter to track the number of PNG files processed
     let filesProcessed = 0;
 
     // Iterate through each file in the folder
     files.forEach(file => {
-      const svgPath = path.join(folderPath, file);
+      const PNGPath = path.join(folderPath, file);
 
-      // Read the content of the SVG file as a Buffer
-      fs.readFile(svgPath, (err, data) => {
+      // Read the content of the PNG file as a Buffer
+      fs.readFile(PNGPath, (err, data) => {
         if (err) throw err;
 
-        // Insert the SVG into the database
-        insertSVGIntoDatabase(data);
+        // Insert the PNG into the database
+        insertPNGIntoDatabase(data);
 
         // Increment the counter
         filesProcessed++;
 
         // Check if all files have been processed
         if (filesProcessed === files.length) {
-          // Close the database connection after inserting all SVGs
+          // Close the database connection after inserting all PNGs
           connection.end(err => {
             if (err) return console.log('error:' + err.message);
             console.log('Database connection closed.');
@@ -66,14 +66,14 @@ connection.connect(err => {
 
 
 
-// Function to insert the SVG into the database
-function insertSVGIntoDatabase(svgBuffer) {
+// Function to insert the PNG into the database
+function insertPNGIntoDatabase(PNGBuffer) {
   const query = 'INSERT INTO image (data) VALUES (?)';
-  const values = [svgBuffer];
+  const values = [PNGBuffer];
 
   connection.query(query, values, (error, results, fields) => {
     if (error) throw error;
 
-    console.log('SVG inserted successfully, ID:', results.insertId);
+    console.log('PNG inserted successfully, ID:', results.insertId);
   });
 }
