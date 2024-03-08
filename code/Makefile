@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c17
-LDFLAGS = -lm
+LDFLAGS = -lm -lpng
 
 
 #variable
 TARGET = a.out
-SOURCES = FPP.c
+SOURCES = ImageProcessor.c 
 
 all: $(TARGET)
 

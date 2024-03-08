@@ -7,11 +7,15 @@
 #include <math.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <png.h>
+#include <time.h>
 
 
 
 
 
+
+#define PI 3.1415926535
 #define SET(msk, i) ((msk)|(1<<(i)))
 #define TEST(msk, i) ((msk)&(1<<(i)))
 #define CLEAR(msk, i) ((msk)&~(1<<(i)))
@@ -40,10 +44,6 @@ int CDS[][9] = {
 
 
     
-
-
-
-
 
 
 
