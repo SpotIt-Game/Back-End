@@ -57,8 +57,6 @@ Image newImage(){
 
 void scaleAndRotate(Image * img){
 
-    
-
     double cosTheta = cos(R), sinTheta = sin(R);
     for(int i = 0; i<4; i++){
         img->points[i][0] *= S;
