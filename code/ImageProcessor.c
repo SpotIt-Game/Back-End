@@ -67,8 +67,8 @@ void scaleAndRotate(Image * img){
     cY = img->points[3][1]>>1;
 
     for(int i = 0; i<4; ++i){
-        img->points[i][0] = (int)((img->points[i][0]-cX)*cosTheta - (img->points[i][1]-cY)*sinTheta) + cX;
-        img->points[i][1] = (int)((img->points[i][0]-cX)*sinTheta + (img->points[i][1]-cY)*cosTheta) + cY;
+        img->points[i][0] = (int)((img->points[i][0]-cX)*cosTheta - (img->points[i][1]-cY)*sinTheta) + cX;     //se actualiza el punto i,0 para que sea su valor ya rotado
+        img->points[i][1] = (int)((img->points[i][0]-cX)*sinTheta + (img->points[i][1]-cY)*cosTheta) + cY;     //luego se usa el valor rotado para rotar otro punto?
     }
 
 }
