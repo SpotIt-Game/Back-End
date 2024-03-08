@@ -21,6 +21,19 @@ struct image{
 
 
 
+Image newImage(){
+
+    Image img = {
+        .points = {{0, 0}, {cols, 0}, {0, rows}, {cols, rows}}, 
+        .rotate = R,
+        .scale = S,
+    };return img;
+
+}
+
+
+
+
 
 
 void readPNG(char *file){
@@ -43,41 +56,28 @@ void readPNG(char *file){
 
 
 
-Image newImage(){
-
-    Image img = {
-        .points = {{0, 0}, {cols, 0}, {0, rows}, {cols, rows}}, 
-        .rotate = R,
-        .scale = S,
-    };return img;
-
-}
 
 
 
 void scaleAndRotate(Image * img){
 
     double cosTheta = cos(R), sinTheta = sin(R);
+    cX = cols>>1; cY = rows>>1;
+
+    for(int i = 0; i<4; ++i){
+
+        int x = img->points[i][0] - cX, y = img->points[i][1] - cY;
+        img->points[i][0] = (int)(x*cosTheta - y*sinTheta) + cX;
+        img->points[i][1] = (int)(x*sinTheta + y*cosTheta) + cY;
+
+    }
+
     for(int i = 0; i<4; i++){
         img->points[i][0] *= S;
         img->points[i][1] *= S;
     }
 
-    cX = img->points[3][0]>>1;
-    cY = img->points[3][1]>>1;
-
-    for(int i = 0; i<4; ++i){
-        img->points[i][0] = (int)((img->points[i][0]-cX)*cosTheta - (img->points[i][1]-cY)*sinTheta) + cX;     //se actualiza el punto i,0 para que sea su valor ya rotado
-        img->points[i][1] = (int)((img->points[i][0]-cX)*sinTheta + (img->points[i][1]-cY)*cosTheta) + cY;     //luego se usa el valor rotado para rotar otro punto?
-    }
-
 }
-
-
-
-
-
-
 
 
 
@@ -104,6 +104,7 @@ int main(){
     Image img = newImage();
     
     scaleAndRotate(&img);
+    for(int i = 0; i<4; ++i) printf("%d %d\n", img.points[i][0], img.points[i][1]);
     return 0;
 
 }
