@@ -105,10 +105,7 @@ void process_images_in_folder() {
                 print_in_txt(&img);
             }
         } closedir(dir);
-    } else{
-        printf("%s\n","hola mundo");
-        abort();
-    }
+    } else abort();
 }
 
 int main(){
