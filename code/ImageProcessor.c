@@ -1,3 +1,6 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
 #include <png.h>
 #include<string.h>
 #include<dirent.h>
@@ -70,13 +73,19 @@ void print_num(int num){
     fprintf(archivo,"%s\n",chain);
 }
 
+void print_float(double num){
+    char chain[20];
+    sprintf(chain,"%.5f",num);
+    fprintf(archivo,"%s\n",chain);
+}
+
 void print_in_txt(Image* img){
     print_num(rows);
     print_num(cols);
     for(int i=0;i<8;i++){
         print_num(img->points[(int)(i/2)][i%2]);
-    } print_num((int)img->rotate);
-    print_num((int)img->scale);
+    } print_float(img->rotate);
+    print_float(img->scale);
     fprintf(archivo,"%s","\n");
 }
 
@@ -89,8 +98,8 @@ void process_images_in_folder() {
         while ((ent = readdir(dir)) != NULL) {
             if (strstr(ent->d_name, ".png") != NULL) {
                 readPNG(ent->d_name);
-                R = ((double)rand() / RAND_MAX) * 2.0 * pi;
-                S = sqrt(((double)rand() / RAND_MAX) * 2.0);
+                R = ((double)rand() / RAND_MAX) * 2.0 * pi;  //[0,2pi]
+                S = sqrt(((double)rand() / RAND_MAX) * 2.0); //[0,sqrt(2)]
                 Image img = newImage(R,S);
                 scaleAndRotate(&img);
                 print_in_txt(&img);
