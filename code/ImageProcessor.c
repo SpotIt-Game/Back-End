@@ -1,10 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
 #include <png.h>
+#include<string.h>
+#include<dirent.h>
 #define pi 3.141592653589793
+#define FOLDER_PATH "/home/joshua/Desktop/C/imagenes"
 
-FILE* archivo;  //no olvidar poner el fclose(archivo)
+FILE* archivo;
 
 int rows, cols;
 
@@ -24,18 +24,29 @@ Image newImage(double R, double S){
 }
 
 void readPNG(char *file){
-    FILE *fp = fopen(file, "rb");
+    char filepath[256];
+    snprintf(filepath,sizeof(filepath),"%s/%s",FOLDER_PATH,file);
+    FILE *fp = fopen(filepath, "rb");
     if (!fp) abort();
     png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!png) abort();
-    png_infop info = png_create_info_struct(png);
-    if (!info) abort();
-    if (setjmp(png_jmpbuf(png))) abort();
-    png_init_io(png, fp);
+    if (!png){
+        fclose(fp);
+        abort();
+    } png_infop info = png_create_info_struct(png);
+    if (!info){
+        fclose(fp);
+        png_destroy_read_struct(&png,NULL,NULL);
+        abort();
+    } if (setjmp(png_jmpbuf(png))){
+        fclose(fp);
+        png_destroy_read_struct(&png,&info,NULL);
+        abort();
+    } png_init_io(png, fp);
     png_read_info(png, info);
     cols = (int)png_get_image_width(png, info);
     rows = (int)png_get_image_height(png, info);
     fclose(fp);
+    png_destroy_read_struct(&png,&info,NULL);
 }
 
 void scaleAndRotate(Image * img){
@@ -69,18 +80,32 @@ void print_in_txt(Image* img){
     fprintf(archivo,"%s","\n");
 }
 
+void process_images_in_folder() {
+    DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir(FOLDER_PATH)) != NULL) {
+        srand((unsigned)time(NULL));
+        double R,S;
+        while ((ent = readdir(dir)) != NULL) {
+            if (strstr(ent->d_name, ".png") != NULL) {
+                readPNG(ent->d_name);
+                R = ((double)rand() / RAND_MAX) * 2.0 * pi;
+                S = sqrt(((double)rand() / RAND_MAX) * 2.0);
+                Image img = newImage(R,S);
+                scaleAndRotate(&img);
+                print_in_txt(&img);
+            }
+        } closedir(dir);
+    } else{
+        printf("%s\n","hola mundo");
+        abort();
+    }
+}
+
 int main(){
     archivo=fopen("puntos.txt","w");
     if(archivo==NULL) abort();
-    readPNG("Connor.png"); //Falta actuaizar para que lea de todo un directorio
-
-    srand((unsigned)time(NULL));
-    double R = ((double)rand() / RAND_MAX) * 2.0 * pi;
-    double S = sqrt(((double)rand() / RAND_MAX) * 2.0);
-
-    Image img = newImage(R,S);
-    scaleAndRotate(&img);
-    print_in_txt(&img);
+    process_images_in_folder();
     fclose(archivo);
     return 0;
 }
