@@ -9,6 +9,8 @@
 #include <stdbool.h>
 #include <png.h>
 #include <time.h>
+#include "lib/mysql.h"
+
 
 
 
@@ -22,6 +24,16 @@
 #define FLIP(msk, i) ((msk)^(1<<(i)))
 #define size(arr) (int)(sizeof((arr))/sizeof((arr[0])))
 #define bitset struct bitset
+
+
+
+
+
+
+
+
+
+
 
 
 

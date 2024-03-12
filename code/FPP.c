@@ -18,8 +18,7 @@ deck mat;
 void print(){
 
     for(int i = 0; i<n; i++){
-        printf("Card %d: ", i+1);
-        for(int j = 0; j<n; j++) if(test(&mat[i], j)) printf("%d ", j);
+        for(int j = 0; j<n; j++) if(test(&mat[i], j)) printf("%d ", j+1);
         printf("\n");
     }
 
