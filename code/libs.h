@@ -1,6 +1,8 @@
 #ifndef LIBS_H
 #define LIBS_H
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +26,8 @@
 #define FLIP(msk, i) ((msk)^(1<<(i)))
 #define size(arr) (int)(sizeof((arr))/sizeof((arr[0])))
 #define bitset struct bitset
+#define min(a, b) (((a)+(b)-fabs((a)-(b)))/2)
+#define max(a, b) (((a)+(b)+fabs((a)-(b)))/2)
 
 
 
