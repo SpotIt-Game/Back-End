@@ -9,7 +9,7 @@ import java.nio.file.*;
 
 public class ProcessDeck {
 
-    static String path = "/home/danilo/SpotIT-Game/SpotIT/code/out.txt";
+    static String path = "/home/duquehp/SpotIT/code/out.txt";
     static int file = 1;
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {

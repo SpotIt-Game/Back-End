@@ -66,15 +66,4 @@ public class RotateAndScaleCard{
 
 
 
-    public static void main(String[] args) throws Exception{
-
-        ArrayList<Integer> arr = new ArrayList<>(Arrays.asList(1, 6, 18, 22, 29, 31));
-        RotateAndScaleCard RotateAndScaleCard = new RotateAndScaleCard(arr, connectDB.init());
-        RotateAndScaleCard.processImages();
-
-    }
-
-
-
-
 }
