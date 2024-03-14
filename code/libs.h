@@ -3,6 +3,7 @@
 
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,21 +20,27 @@
 
 
 
+
+
 #define PI 3.1415926535
 #define SET(msk, i) ((msk)|(1<<(i)))
 #define TEST(msk, i) ((msk)&(1<<(i)))
 #define CLEAR(msk, i) ((msk)&~(1<<(i)))
 #define FLIP(msk, i) ((msk)^(1<<(i)))
 #define size(arr) (int)(sizeof((arr))/sizeof((arr[0])))
-#define bitset struct bitset
 #define min(a, b) (((a)+(b)-fabs((a)-(b)))/2)
 #define max(a, b) (((a)+(b)+fabs((a)-(b)))/2)
+#define oo 1e10
 
 
 
 
 
 
+
+typedef struct{
+    double x, y;
+}vector;
 
 
 
@@ -70,9 +77,9 @@ int CDS[][9] = {
 
 
 //bitset a = init(64);   creates init bitset of size 64(bits)
-bitset{
+typedef struct{
     int * arr, size;
-};
+}bitset;
 
 
 bitset init(int size){
