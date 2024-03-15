@@ -1,10 +1,38 @@
-#include "Image.h"
+#include "SAT.h"
+
 
 
 
 #define maxArea (radio*radio*PI)
-int id_image, n = 0;
+int id_image, w, h, n = 0;
 card input;
+
+
+
+
+
+
+
+
+
+
+
+double fitness(card * curr){
+
+    double fitness = 1; 
+    for(int i = 0; i<n; ++i) fitness += curr->imgs[i].width * curr->imgs[i].height;
+    int collisions = 1;
+    for(int i = 0; i<n; ++i){
+        collisions += !inside(curr->imgs[i]);
+        for(int j = i+1; j<n; ++j)
+            collisions += (polygonIntersect(curr->imgs[i], curr->imgs[j]));
+
+    }return fitness/collisions;
+
+        
+}
+
+
 
 
 
@@ -35,21 +63,13 @@ void print(){
 
 int main(){
 
-    while(scanf("%d", &id_image) == 1){
-
-        input.imgs[n].id_image = id_image;
-        input.imgs[n].rotate = 0;
+    while(scanf("%d %d %d", &input.imgs[n].id_image, &input.imgs[n].width, &input.imgs[n].height) == 3){
 
         for(int i = 0; i<4; ++i) scanf("%lf %lf", &input.imgs[n].P[i].x, &input.imgs[n].P[i].y);
-        input.imgs[n].scale = radio/max(input.imgs[n].P[3].x, input.imgs[n].P[3].y);
-
-        for(int i = 0; i<4; ++i){
-            input.imgs[n].P[i].x *= input.imgs[n].scale;
-            input.imgs[n].P[i].y *= input.imgs[n].scale;
-
-        }++n;  
+        ++n; 
 
     }print();
+    printf("%lf\n", fitness(&input));   
     return 0;
     
 
