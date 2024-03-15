@@ -6,15 +6,42 @@
 const int radio = 140; // radio - 10
 
 typedef struct{
-    int id_image, width, height;
+    double x, y;
+}vector;
+
+
+typedef struct{
+    int id_image;
     vector P[4];
-    double scale, rotate;
+    double scale, rotate, width, height;
 } polygon;
 
 
 typedef struct {
     polygon imgs[73];
 } card;
+
+
+
+
+
+void scale(polygon * a, double factor){
+
+    a->height *= factor;
+    a->width *= factor;
+    for(int i = 0; i<4; ++i){
+        a->P[i].x *= factor;
+        a->P[i].y *= factor;
+    }a->scale *= factor;
+
+}
+
+
+
+
+double random(double min, double max){
+    return min + (double)rand() / RAND_MAX * (max - min);
+}
 
 
 

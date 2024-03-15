@@ -38,10 +38,6 @@
 
 
 
-typedef struct{
-    double x, y;
-}vector;
-
 
 
 
