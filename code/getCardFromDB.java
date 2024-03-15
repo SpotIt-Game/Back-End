@@ -11,13 +11,7 @@ import java.util.*;
 
 
 
-
-
-
-
-
-
-public class RotateAndScaleCard{
+public class getCardFromDB{
 
 
     private Connection conn;
@@ -26,7 +20,7 @@ public class RotateAndScaleCard{
 
 
 
-    public RotateAndScaleCard(ArrayList<Integer> arr, Connection c) {
+    public getCardFromDB(ArrayList<Integer> arr, Connection c) {
         ids = arr;
         conn = c;
     }
