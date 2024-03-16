@@ -102,10 +102,9 @@ vector getCenter(polygon * a){
 
 
 //rotates a polygon by a random factor
-void rotate(polygon *a) {
+void rotate(polygon *a, double radian) {
 
     vector center = getCenter(a);
-    double radian = random(0.0, 2 * PI);
     a->rotate += radian;
     double cosTheta = cos(radian), sinTheta = sin(radian);
 
