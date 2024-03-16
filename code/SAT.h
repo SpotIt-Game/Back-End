@@ -3,7 +3,10 @@
 
 
 
-const int radio = 140; // radio - 10
+const int radio = 150;
+const int initSize = 20;
+
+
 
 typedef struct{
     double x, y;
@@ -25,9 +28,25 @@ typedef struct {
 
 
 
-
+//random inside an interval
 double random(double min, double max){
     return min + (double)rand() / RAND_MAX * (max - min);
+}
+
+//distance between two points
+double distance(vector a, vector b) {
+    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+//verifies if a polygon is inside a circle
+bool inside(polygon a){
+    for (int i = 0; i < 4; ++i)
+        if (sqrt(a.P[i].x * a.P[i].x + a.P[i].y * a.P[i].y) >= radio) return 0;
+    return 1;
+}
+
+double dotProduct(vector a, vector b) {
+    return a.x * b.x + a.y * b.y;
 }
 
 
@@ -36,6 +55,14 @@ double random(double min, double max){
 
 
 
+
+
+
+
+
+
+
+//scales a polygon by factor
 void scale(polygon *a, double factor){
 
     a->height *= factor;
@@ -47,9 +74,10 @@ void scale(polygon *a, double factor){
 
 }
 
+//moves a polygon to a random point inside the circle
 void move(polygon *a){
 
-    int moveX = (rand()%radio) - (radio>>1), moveY = (rand()%radio) - (radio>>1);
+    int moveX = random(initSize - radio, radio - initSize), moveY = random(initSize - radio, radio-initSize);
     for(int w = 0; w<4; ++w){
         a->P[w].x += moveX; //check this
         a->P[w].y += moveY;
@@ -58,21 +86,34 @@ void move(polygon *a){
 }
 
 
-void rotate(polygon * a){
+//returns the center point of a circle
+vector getCenter(polygon * a){
 
-    // double radian = random(0.0, 2*PI);
-    // a->rotate += radian;
+    vector c = {0, 0};
+    for (int i = 0; i < 4; ++i) {
+        c.x += a->P[i].x;
+        c.y += a->P[i].y;
 
-    // double cX = a->P[0].x, cY = a->P[0].y;
-    // double cosTheta = cos(radian), sinTheta = sin(radian);
-    // for(int i = 0; i<4; ++i){
+    }c.x /= 4.0;
+    c.y /= 4.0;
+    return c;
 
-    //     double x = a->P[i].x - cX, y = a->P[i].y - cY;
-    //     a->P[i].x *= (x*cosTheta - y*sinTheta) + cX;
-    //     a->P[i].y *= (x*sinTheta + y*cosTheta) + cY;
+}
 
-    // }
 
+//rotates a polygon by a random factor
+void rotate(polygon *a) {
+
+    vector center = getCenter(a);
+    double radian = random(0.0, 2 * PI);
+    a->rotate += radian;
+    double cosTheta = cos(radian), sinTheta = sin(radian);
+
+    for (int i = 0; i < 4; ++i) {
+        double x = a->P[i].x - center.x, y = a->P[i].y - center.x;
+        a->P[i].x = center.x + (x * cosTheta - y * sinTheta);
+        a->P[i].y = center.x + (x * sinTheta + y * cosTheta);
+    }
 
 }
 
@@ -82,16 +123,16 @@ void rotate(polygon * a){
 
 
 
-double distance(vector a, vector b) {
-    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-}
 
 
-bool inside(polygon a){
-    for (int i = 0; i < 4; ++i)
-        if (sqrt(a.P[i].x * a.P[i].x + a.P[i].y * a.P[i].y) >= radio) return 0;
-    return 1;
-}
+
+
+
+
+
+
+
+
 
 
 
@@ -104,12 +145,6 @@ vector normal(vector a, vector b) {
     norm.x /= len;
     norm.y /= len;
     return norm;
-}
-
-
-
-double dotProduct(vector a, vector b) {
-    return a.x * b.x + a.y * b.y;
 }
 
 
@@ -128,12 +163,11 @@ void projectPolygon(vector axis, polygon p, int count, double *min, double *max)
 
 }
 
+
+
 bool intervalIntersect(double minA, double maxA, double minB, double maxB) {
     return maxA >= minB && maxB >= minA;
 }
-
-
-
 
 
 bool polygonIntersect(polygon a, polygon b){

@@ -5,7 +5,7 @@ LDFLAGS = -lm -lpng -lmysqlclient
 
 #variable
 TARGET = a.out
-SOURCES = Genetic.c
+SOURCES = ImageProcessor.c
 
 all: $(TARGET)
 
