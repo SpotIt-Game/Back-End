@@ -19,6 +19,7 @@ typedef struct{
 
 typedef struct {
     polygon imgs[73];
+    double fit;
 } card;
 
 
