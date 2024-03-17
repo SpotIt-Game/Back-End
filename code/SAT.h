@@ -28,6 +28,41 @@ typedef struct {
 
 
 
+
+
+
+vector newVector(double x, double y){
+    vector n;
+    n.x = x;
+    n.y = y;
+    return n;
+}
+
+
+
+
+
+
+
+vector * generatePoints(int n){
+
+    vector * points = (vector*)malloc(n * sizeof(vector));
+    points[0] = newVector(0, 0);
+    n--;
+    for(int i = 0; i<n; ++i) points[i+1] = newVector((radio - initSize) * cos((2*PI*i)/n), (radio - initSize) * sin((2*PI*i)/n));
+    return points;
+
+}
+
+
+
+
+
+
+
+
+
+
 //random inside an interval
 double random(double min, double max){
     return min + (double)rand() / RAND_MAX * (max - min);
@@ -74,16 +109,23 @@ void scale(polygon *a, double factor){
 
 }
 
+
+
 //moves a polygon to a random point inside the circle
 void move(polygon *a){
 
-    int moveX = random(initSize - radio, radio - initSize), moveY = random(initSize - radio, radio-initSize);
+    int moveX = random(initSize - (radio+a->width), radio - (initSize+a->width));
+    int moveY = random(initSize - (radio+a->height), radio - (initSize+a->height));
     for(int w = 0; w<4; ++w){
         a->P[w].x += moveX; //check this
         a->P[w].y += moveY;
     }  
     
 }
+
+
+
+
 
 
 //returns the center point of a circle
