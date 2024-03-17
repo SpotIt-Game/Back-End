@@ -49,7 +49,7 @@ vector * generatePoints(int n){
     vector * points = (vector*)malloc(n * sizeof(vector));
     points[0] = newVector(0, 0);
     n--;
-    for(int i = 0; i<n; ++i) points[i+1] = newVector((radio - initSize) * cos((2*PI*i)/n), (radio - initSize) * sin((2*PI*i)/n));
+    for(int i = 0; i<n; ++i) points[i+1] = newVector((2*radio/3) * cos((2*PI*i)/n), (2*radio/3) * sin((2*PI*i)/n));
     return points;
 
 }
@@ -62,6 +62,19 @@ vector * generatePoints(int n){
 
 
 
+//returns the center point of a circle
+vector getCenter(polygon * a){
+
+    vector c = {0, 0};
+    for (int i = 0; i < 4; ++i) {
+        c.x += a->P[i].x;
+        c.y += a->P[i].y;
+
+    }c.x /= 4.0;
+    c.y /= 4.0;
+    return c;
+
+}
 
 //random inside an interval
 double random(double min, double max){
@@ -111,15 +124,23 @@ void scale(polygon *a, double factor){
 
 
 
-//moves a polygon to a random point inside the circle
-void move(polygon *a){
 
-    int moveX = random(initSize - (radio+a->width), radio - (initSize+a->width));
-    int moveY = random(initSize - (radio+a->height), radio - (initSize+a->height));
+
+
+
+
+//moves a polygon to a given point
+void move(polygon *a, vector * center){
+
+    vector currCenter = getCenter(a);
+    double x = center->x - currCenter.x;
+    double y = center->y - currCenter.y;
+
     for(int w = 0; w<4; ++w){
-        a->P[w].x += moveX; //check this
-        a->P[w].y += moveY;
-    }  
+        a->P[w].x += x;
+        a->P[w].y += y;
+    } 
+
     
 }
 
@@ -128,19 +149,11 @@ void move(polygon *a){
 
 
 
-//returns the center point of a circle
-vector getCenter(polygon * a){
 
-    vector c = {0, 0};
-    for (int i = 0; i < 4; ++i) {
-        c.x += a->P[i].x;
-        c.y += a->P[i].y;
 
-    }c.x /= 4.0;
-    c.y /= 4.0;
-    return c;
 
-}
+
+
 
 
 //rotates a polygon by a random factor
@@ -211,6 +224,8 @@ bool intervalIntersect(double minA, double maxA, double minB, double maxB) {
 }
 
 
+
+
 bool polygonIntersect(polygon a, polygon b){
 
     for (int i = 0; i < 4; ++i) {
@@ -230,5 +245,24 @@ bool polygonIntersect(polygon a, polygon b){
         if (!intervalIntersect(minA, maxA, minB, maxB)) return false;
 
     }return true;
+
+}
+
+
+
+
+
+
+
+
+
+
+void print(polygon curr){
+
+    printf("id: %d\n", curr.id_image);
+    //printf("width: %lf\nheight: %lf\nScale: %lf\nRotate: %lf\n", curr.width, curr.height, curr.scale, curr.rotate);
+    //printf("Area: %lf\n", curr.width * curr.height);
+    for(int j = 0; j<4; ++j) printf("%lf %lf\n", curr.P[j].x, curr.P[j].y);
+    puts("");
 
 }
