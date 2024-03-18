@@ -49,7 +49,7 @@ vector * generatePoints(int n){
     vector * points = (vector*)malloc(n * sizeof(vector));
     points[0] = newVector(0, 0);
     n--;
-    for(int i = 0; i<n; ++i) points[i+1] = newVector((2*radio/3) * cos((2*PI*i)/n), (2*radio/3) * sin((2*PI*i)/n));
+    for(int i = 0; i<n; ++i) points[i+1] = newVector((radio>>2) * cos((2*PI*i)/n), (radio>>2) * sin((2*PI*i)/n));
     return points;
 
 }
@@ -86,10 +86,12 @@ double distance(vector a, vector b) {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
+
+
 //verifies if a polygon is inside a circle
 bool inside(polygon a){
-    for (int i = 0; i < 4; ++i)
-        if (sqrt(a.P[i].x * a.P[i].x + a.P[i].y * a.P[i].y) >= radio) return 0;
+    for (int i = 0; i<4; ++i)
+        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) >= radio-initSize) return 0;
     return 1;
 }
 
@@ -156,7 +158,7 @@ void move(polygon *a, vector * center){
 
 
 
-//rotates a polygon by a random factor
+//rotates a polygon by a given angle
 void rotate(polygon *a, double radian) {
 
     vector center = getCenter(a);
@@ -164,9 +166,9 @@ void rotate(polygon *a, double radian) {
     double cosTheta = cos(radian), sinTheta = sin(radian);
 
     for (int i = 0; i < 4; ++i) {
-        double x = a->P[i].x - center.x, y = a->P[i].y - center.x;
+        double x = a->P[i].x - center.x, y = a->P[i].y - center.y;
         a->P[i].x = center.x + (x * cosTheta - y * sinTheta);
-        a->P[i].y = center.x + (x * sinTheta + y * cosTheta);
+        a->P[i].y = center.y + (x * sinTheta + y * cosTheta);
     }
 
 }
@@ -265,4 +267,16 @@ void print(polygon curr){
     for(int j = 0; j<4; ++j) printf("%lf %lf\n", curr.P[j].x, curr.P[j].y);
     puts("");
 
+}
+
+
+void shuffle(polygon * arr, int n) {
+   
+    for (int i = n - 1; i > 0; i--) {
+        int j = rand() % (i + 1); 
+        polygon temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    
 }
