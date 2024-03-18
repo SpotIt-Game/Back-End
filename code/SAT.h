@@ -76,6 +76,7 @@ vector getCenter(polygon * a){
 
 }
 
+
 //random inside an interval
 double random(double min, double max){
     return min + (double)rand() / RAND_MAX * (max - min);
@@ -91,7 +92,7 @@ double distance(vector a, vector b) {
 //verifies if a polygon is inside a circle
 bool inside(polygon a){
     for (int i = 0; i<4; ++i)
-        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) >= radio-initSize) return 0;
+        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) >= radio-10) return 0;
     return 1;
 }
 
@@ -260,7 +261,7 @@ bool polygonIntersect(polygon a, polygon b){
 
 
 void print(polygon curr){
-
+    
     printf("id: %d\n", curr.id_image);
     //printf("width: %lf\nheight: %lf\nScale: %lf\nRotate: %lf\n", curr.width, curr.height, curr.scale, curr.rotate);
     //printf("Area: %lf\n", curr.width * curr.height);
@@ -270,10 +271,10 @@ void print(polygon curr){
 }
 
 
-void shuffle(polygon * arr, int n) {
+void shuffle(polygon *arr, int n) {
    
     for (int i = n - 1; i > 0; i--) {
-        int j = rand() % (i + 1); 
+        int j = rand()%(i+1); 
         polygon temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;

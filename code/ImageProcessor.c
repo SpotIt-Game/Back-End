@@ -26,31 +26,63 @@ void moveToInitialPoints(){
 
 
 
+//verifies if a polygon is in a valid position
+bool collision(polygon *a, int index){
+
+    for(int k = 0; k<n; ++k)
+        if(k != index && polygonIntersect(*a, input.imgs[k])) return true;
+    return !inside(*a) || (max(a->height, a->width)  > 3*radio/4);
+
+}
 
 
 
 
 
 
-void expand(polygon *a, int pol){
 
-    double i = 1.0, j = 7;
+
+//expands an Image as much as possible, using binary search
+bool expand(polygon *a, int pol){
+
+    double i = 1.0, j = 100;
     polygon aux = *a;
-    while(fabs(i-j) > 1e-10){
+    while(fabs(i-j) > 1e-15){
 
         double m = (i+j)/2;
         aux = *a;
         scale(&aux, m);
-        for(int k = 0; k<n; ++k)
-            if((k != pol) && (polygonIntersect(aux, input.imgs[k]) || (!inside(aux)) || (max(aux.width, aux.height) >= radio>>1))){    
-                j = m; k = n;
-            }
-
-        if(j != m) i = m;
-
+        if(collision(&aux, pol)) j = m;
+        else i = m;
+    
     }*a = aux;
+    return (i-1 > 10e-15);
 
 }
+
+
+
+
+
+
+
+bool tryRotating(polygon * a, int index){
+
+    polygon aux = *a;
+    for(double i = 0.0174; i<2*PI; i += 0.0174){
+
+        rotate(a, i);
+        if(!collision(a, index)) return true;
+
+    }*a = aux;
+    return false;
+    
+
+}
+
+
+
+
 
 
 
@@ -60,8 +92,10 @@ void expandImages(){
 
     for(int i = 0; i<10000; ++i){
         int index = rand()%n;
+        //if(!expand(&input.imgs[index], index)) tryRotating(&input.imgs[index], index);
         expand(&input.imgs[index], index);
-    }for(int i = 0; i<10000; ++i) expand(&input.imgs[i%n], i%n);
+        
+    }
     
 
 
