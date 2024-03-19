@@ -2,8 +2,6 @@
 
 
 
-
-
 int n = 0;
 card input;
 
@@ -31,7 +29,7 @@ bool collision(polygon *a, int index){
 
     for(int k = 0; k<n; ++k)
         if(k != index && polygonIntersect(*a, input.imgs[k])) return true;
-    return !inside(*a) || (max(a->height, a->width)  > 3*radio/4);
+    return !inside(*a) || (max(a->height, a->width)  > radio);
 
 }
 
@@ -43,7 +41,7 @@ bool collision(polygon *a, int index){
 
 
 //expands an Image as much as possible, using binary search
-bool expand(polygon *a, int pol){
+void expand(polygon *a, int pol){
 
     double i = 1.0, j = 100;
     polygon aux = *a;
@@ -56,7 +54,6 @@ bool expand(polygon *a, int pol){
         else i = m;
     
     }*a = aux;
-    return (i-1 > 10e-15);
 
 }
 
@@ -66,17 +63,15 @@ bool expand(polygon *a, int pol){
 
 
 
-bool tryRotating(polygon * a, int index){
+void tryRotating(polygon * a, int index){
 
     polygon aux = *a;
     for(double i = 0.0174; i<2*PI; i += 0.0174){
 
         rotate(a, i);
-        if(!collision(a, index)) return true;
+        if(!collision(a, index)) return;
 
     }*a = aux;
-    return false;
-    
 
 }
 
@@ -90,18 +85,34 @@ bool tryRotating(polygon * a, int index){
 
 void expandImages(){
 
-    for(int i = 0; i<10000; ++i){
+    for(int i = 0; i<1000; ++i){
         int index = rand()%n;
-        //if(!expand(&input.imgs[index], index)) tryRotating(&input.imgs[index], index);
         expand(&input.imgs[index], index);
+        tryRotating(&input.imgs[index], index);
         
     }
-    
-
 
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+double usedArea(){
+
+    double area = 0;
+    for(int i = 0; i<n; ++i) area += (input.imgs[i].width * input.imgs[i].height);
+    return area;
+
+}
 
 
 
@@ -129,6 +140,7 @@ int main(){
     moveToInitialPoints();
     expandImages();
     for(int i = 0; i<n; ++i) print(input.imgs[i]);
+    //printf("Used area: %lf\n", usedArea());
     return 0;
     
 

@@ -41,12 +41,22 @@ vector newVector(double x, double y){
 
 
 
+//random inside an interval
+double random(double min, double max){
+    return min + ((double)rand()) / RAND_MAX * (max - min);
+}
 
 
 
+
+
+
+
+
+//Improve this function
 vector * generatePoints(int n){
 
-    vector * points = (vector*)malloc(n * sizeof(vector));
+    vector * points = (vector*)malloc(n*sizeof(vector));
     points[0] = newVector(0, 0);
     n--;
     for(int i = 0; i<n; ++i) points[i+1] = newVector((radio>>2) * cos((2*PI*i)/n), (radio>>2) * sin((2*PI*i)/n));
@@ -77,24 +87,18 @@ vector getCenter(polygon * a){
 }
 
 
-//random inside an interval
-double random(double min, double max){
-    return min + (double)rand() / RAND_MAX * (max - min);
-}
 
-//distance between two points
-double distance(vector a, vector b) {
-    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-}
+
 
 
 
 //verifies if a polygon is inside a circle
 bool inside(polygon a){
     for (int i = 0; i<4; ++i)
-        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) >= radio-10) return 0;
+        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) > radio) return 0;
     return 1;
 }
+
 
 double dotProduct(vector a, vector b) {
     return a.x * b.x + a.y * b.y;
@@ -114,14 +118,15 @@ double dotProduct(vector a, vector b) {
 
 
 //scales a polygon by factor
-void scale(polygon *a, double factor){
+void scale(polygon * a, double factor){
 
     a->height *= factor;
     a->width *= factor;
     for(int i = 0; i<4; ++i){
         a->P[i].x *= factor;
         a->P[i].y *= factor;
-    }a->scale *= factor;
+    }a->scale *= factor*factor;
+
 
 }
 
@@ -250,6 +255,19 @@ bool polygonIntersect(polygon a, polygon b){
     }return true;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
