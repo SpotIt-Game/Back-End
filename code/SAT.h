@@ -2,9 +2,9 @@
 
 
 
-
-const int radio = 150;
-const int initSize = 20;
+#define double long double
+const double radio = 150.0;
+const double initSize = 20.0;
 
 
 
@@ -53,13 +53,23 @@ double random(double min, double max){
 
 
 
-//Improve this function
+
+
+
+
+
+
+
+
+
+
+//This may change
 vector * generatePoints(int n){
 
     vector * points = (vector*)malloc(n*sizeof(vector));
     points[0] = newVector(0, 0);
     n--;
-    for(int i = 0; i<n; ++i) points[i+1] = newVector((radio>>2) * cos((2*PI*i)/n), (radio>>2) * sin((2*PI*i)/n));
+    for(int i = 0; i<n; ++i) points[i+1] = newVector((radio/4) * cos((2*PI*i)/n), (radio/4) * sin((2*PI*i)/n));
     return points;
 
 }
@@ -161,6 +171,19 @@ void move(polygon *a, vector * center){
 
 
 
+void rotateCorner(polygon *a, double radian, vector *corner) {
+
+    a->rotate += radian;
+    double cosTheta = cos(radian), sinTheta = sin(radian);
+
+    for (int i = 0; i < 4; ++i) {
+        double x = a->P[i].x - corner->x, y = a->P[i].y - corner->y;
+        a->P[i].x = corner->x + (x * cosTheta - y * sinTheta);
+        a->P[i].y = corner->y + (x * sinTheta + y * cosTheta);
+    }
+
+}
+
 
 
 
@@ -178,16 +201,6 @@ void rotate(polygon *a, double radian) {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -283,7 +296,7 @@ void print(polygon curr){
     printf("id: %d\n", curr.id_image);
     //printf("width: %lf\nheight: %lf\nScale: %lf\nRotate: %lf\n", curr.width, curr.height, curr.scale, curr.rotate);
     //printf("Area: %lf\n", curr.width * curr.height);
-    for(int j = 0; j<4; ++j) printf("%lf %lf\n", curr.P[j].x, curr.P[j].y);
+    for(int j = 0; j<4; ++j) printf("%Lf %Lf\n", curr.P[j].x, curr.P[j].y);
     puts("");
 
 }
@@ -297,5 +310,23 @@ void shuffle(polygon *arr, int n) {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+    
+}
+
+
+
+
+
+
+polygon copyPolygon(polygon * a){
+
+    polygon p;
+    p.id_image = a->id_image;
+    p.scale = a->scale;
+    p.width = a->width;
+    p.height = a->height;
+    p.rotate = a->rotate;
+    for(int i = 0; i<4; ++i) p.P[i] = a->P[i];
+    return p;
     
 }

@@ -28,8 +28,8 @@
 #define CLEAR(msk, i) ((msk)&~(1<<(i)))
 #define FLIP(msk, i) ((msk)^(1<<(i)))
 #define size(arr) (int)(sizeof((arr))/sizeof((arr[0])))
-#define min(a, b) (((a)+(b)-fabs((a)-(b)))/2)
-#define max(a, b) (((a)+(b)+fabs((a)-(b)))/2)
+#define min(a, b) (((a)+(b)-fabsl((a)-(b)))/2)
+#define max(a, b) (((a)+(b)+fabsl((a)-(b)))/2)
 #define oo 1e10
 
 

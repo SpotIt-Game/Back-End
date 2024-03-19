@@ -45,7 +45,7 @@ void expand(polygon *a, int pol){
 
     double i = 1.0, j = 100;
     polygon aux = *a;
-    while(fabs(i-j) > 1e-15){
+    while(fabsl(i-j) > 1e-15){
 
         double m = (i+j)/2;
         aux = *a;
@@ -63,7 +63,9 @@ void expand(polygon *a, int pol){
 
 
 
-void tryRotating(polygon * a, int index){
+
+
+void tryRotatingCenter(polygon * a, int index){
 
     polygon aux = *a;
     for(double i = 0.0174; i<2*PI; i += 0.0174){
@@ -74,6 +76,26 @@ void tryRotating(polygon * a, int index){
     }*a = aux;
 
 }
+
+
+void tryRotatingCorners(polygon * a, int index){
+
+    for(int i = 0; i<4; ++i){
+        polygon aux = copyPolygon(a);
+        vector corner = {aux.P[i].x, aux.P[i].y};
+        for(double j = 0.0174; j<2*PI; j += 0.0174){
+            rotateCorner(&aux, j, &corner);
+            if(!collision(&aux, index)){
+                a = &aux;
+                return;
+            }
+        }
+    }
+    
+
+}
+
+
 
 
 
@@ -88,8 +110,9 @@ void expandImages(){
     for(int i = 0; i<1000; ++i){
         int index = rand()%n;
         expand(&input.imgs[index], index);
-        tryRotating(&input.imgs[index], index);
-        
+        tryRotatingCenter(&input.imgs[index], index);
+        tryRotatingCorners(&input.imgs[index], index);
+        expand(&input.imgs[index], index);
     }
 
 }
@@ -127,12 +150,12 @@ double usedArea(){
 int main(){
 
     srand(time(NULL));
-    while(scanf("%d %lf %lf", &input.imgs[n].id_image, &input.imgs[n].width, &input.imgs[n].height) == 3){
+    while(scanf("%d %Lf %Lf", &input.imgs[n].id_image, &input.imgs[n].width, &input.imgs[n].height) == 3){
 
-        for(int i = 0; i<4; ++i) scanf("%lf %lf", &input.imgs[n].P[i].x, &input.imgs[n].P[i].y);
+        for(int i = 0; i<4; ++i) scanf("%Lf %Lf", &input.imgs[n].P[i].x, &input.imgs[n].P[i].y);
         input.imgs[n].scale = 1;
         input.imgs[n].rotate = 0;
-        scale(&input.imgs[n], initSize/max(input.imgs[n].width, input.imgs[n].height));
+        scale(&input.imgs[n], (initSize)/max(input.imgs[n].width, input.imgs[n].height));
         rotate(&input.imgs[n], random(0.0, 2*PI));
         ++n; 
 
@@ -140,7 +163,7 @@ int main(){
     moveToInitialPoints();
     expandImages();
     for(int i = 0; i<n; ++i) print(input.imgs[i]);
-    //printf("Used area: %lf\n", usedArea());
+    // printf("Used area: %Lf\n", usedArea());
     return 0;
     
 
