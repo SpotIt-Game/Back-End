@@ -29,7 +29,7 @@ bool collision(polygon *a, int index){
 
     for(int k = 0; k<n; ++k)
         if(k != index && polygonIntersect(*a, input.imgs[k])) return true;
-    return !inside(*a) || (max(a->height, a->width)  > radio);
+    return !inside(*a) || (max(a->height, a->width) >= 5*radio/4);
 
 }
 
@@ -81,12 +81,12 @@ void tryRotatingCenter(polygon * a, int index){
 void tryRotatingCorners(polygon * a, int index){
 
     for(int i = 0; i<4; ++i){
-        polygon aux = copyPolygon(a);
+        polygon aux = *a;
         vector corner = {aux.P[i].x, aux.P[i].y};
         for(double j = 0.0174; j<2*PI; j += 0.0174){
             rotateCorner(&aux, j, &corner);
             if(!collision(&aux, index)){
-                a = &aux;
+                *a = aux;
                 return;
             }
         }

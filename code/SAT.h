@@ -304,7 +304,7 @@ void print(polygon curr){
 
 void shuffle(polygon *arr, int n) {
    
-    for (int i = n - 1; i > 0; i--) {
+    for (int i = n-1; i > 0; i--) {
         int j = rand()%(i+1); 
         polygon temp = arr[i];
         arr[i] = arr[j];
@@ -318,15 +318,3 @@ void shuffle(polygon *arr, int n) {
 
 
 
-polygon copyPolygon(polygon * a){
-
-    polygon p;
-    p.id_image = a->id_image;
-    p.scale = a->scale;
-    p.width = a->width;
-    p.height = a->height;
-    p.rotate = a->rotate;
-    for(int i = 0; i<4; ++i) p.P[i] = a->P[i];
-    return p;
-    
-}
