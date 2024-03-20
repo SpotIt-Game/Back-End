@@ -22,7 +22,7 @@ plt.title('Points')
 
 
 # Draw a circle centered at (0, 0) with a radius of 150
-circle = Circle((0, 0), 150, edgecolor='black', facecolor='white')
+circle = Circle((0, 0), 200, edgecolor='black', facecolor='white')
 plt.gca().add_patch(circle)
 
 

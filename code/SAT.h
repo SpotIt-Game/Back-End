@@ -3,8 +3,8 @@
 
 
 #define double long double
-const double radio = 150.0;
-const double initSize = 20.0;
+const double radio = 200.0;
+const double initSize = 26.0;
 
 
 
