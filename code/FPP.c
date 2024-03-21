@@ -23,7 +23,7 @@ void print(){
     printf("%d\n", order);
     for(int i = 0; i<n; i++){
         printf("%d\n", id_card++);
-        for(int j = 0; j<n; j++) if(test(&mat[i], j)) printf("%d ", j+1);
+        for(int j = 0; j<n; j++) if(test(&mat[i], j)) printf("%d ", (id_deck > 5)*73 + j+1);
         printf("\n");
     }
 

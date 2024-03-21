@@ -12,7 +12,7 @@ import java.nio.file.*;
 
 public class getDeckFromDB {
 
-    static String path = "/home/danilo/SpotIT-Game/SpotIT/code/out.txt";
+    static String path = "/home/duquehp/SpotIT/code/out.txt";
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
 
@@ -20,6 +20,7 @@ public class getDeckFromDB {
         List<String> lines = Files.readAllLines(Paths.get(path));
         int id_deck = Integer.parseInt(lines.get(0)); 
         int order = Integer.parseInt(lines.get(1));
+        
         BufferedWriter writer = new BufferedWriter(new FileWriter("deck" + id_deck));
         writer.write(id_deck + " " + order + "\n");
 

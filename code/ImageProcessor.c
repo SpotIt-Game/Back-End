@@ -141,7 +141,7 @@ int main(){
 
     srand(time(NULL));
     scanf("%d %d", &id_deck, &n);
-    // printf("id_deck: %d\n", id_deck);
+    printf("id_deck: %d\n", id_deck);
 
     for(int i = 0; i<n * (n-1) + 1; ++i){
 
@@ -158,10 +158,8 @@ int main(){
         }shuffle(input.imgs, n);
         moveToInitialPoints();
         expandImages();
-        // printf("id_card: %d\n", id_card);
-        puts("'''");
+        printf("id_card: %d\n", id_card);
         for(int j = 0; j<n; ++j) print(input.imgs[j]);
-        puts("''',");
 
     }return 0;
     

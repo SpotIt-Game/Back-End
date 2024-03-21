@@ -293,10 +293,8 @@ bool polygonIntersect(polygon a, polygon b){
 void print(polygon curr){
     
     printf("id: %d\n", curr.id_image);
-    for(int i = 0; i<4; ++i) printf("%Lf %Lf\n", curr.P[i].x, curr.P[i].y);
-    // printf("Scale: %Lf\nRotate: %Lf\n", curr.scale, curr.rotate);
-    // printf("Area: %Lf\n", curr.width * curr.height);
-    // printf("%Lf %Lf\n", curr.P[0].x, curr.P[0].y);
+    printf("Scale: %Lf\nRotate: %Lf\n", curr.scale, curr.rotate);
+    printf("%Lf %Lf\n", curr.P[0].x, curr.P[0].y);
     puts("");
 
 }
