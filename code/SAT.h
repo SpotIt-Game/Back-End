@@ -23,7 +23,6 @@ typedef struct{
 
 typedef struct {
     polygon imgs[73];
-    double fit;
 } card;
 
 
@@ -294,12 +293,14 @@ bool polygonIntersect(polygon a, polygon b){
 void print(polygon curr){
     
     printf("id: %d\n", curr.id_image);
-    //printf("width: %lf\nheight: %lf\nScale: %lf\nRotate: %lf\n", curr.width, curr.height, curr.scale, curr.rotate);
-    //printf("Area: %lf\n", curr.width * curr.height);
-    for(int j = 0; j<4; ++j) printf("%Lf %Lf\n", curr.P[j].x, curr.P[j].y);
+    for(int i = 0; i<4; ++i) printf("%Lf %Lf\n", curr.P[i].x, curr.P[i].y);
+    // printf("Scale: %Lf\nRotate: %Lf\n", curr.scale, curr.rotate);
+    // printf("Area: %Lf\n", curr.width * curr.height);
+    // printf("%Lf %Lf\n", curr.P[0].x, curr.P[0].y);
     puts("");
 
 }
+
 
 
 void shuffle(polygon *arr, int n) {

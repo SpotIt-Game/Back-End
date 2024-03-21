@@ -6,7 +6,9 @@
 
 
 
-int n, order;
+
+
+int n, order, id_deck, id_card;
 deck mat;
 
 
@@ -17,7 +19,10 @@ deck mat;
 
 void print(){
 
+    printf("%d\n" ,id_deck);
+    printf("%d\n", order);
     for(int i = 0; i<n; i++){
+        printf("%d\n", id_card++);
         for(int j = 0; j<n; j++) if(test(&mat[i], j)) printf("%d ", j+1);
         printf("\n");
     }
@@ -48,11 +53,18 @@ void createFPP(){
 
 int main(){
 
+    printf("Insert the order of the plane: ");
     scanf("%d", &order);
+    printf("Insert the id of the deck: ");
+    scanf("%d", &id_deck);
+    printf("Insert the id of the first card: ");
+    scanf("%d", &id_card);
+
     n = order*(order-1) + 1;
     mat = (deck)malloc(n*sizeof(card));
     for(int i = 0; i<n; i++) mat[i] = init(n);
     createFPP();
+
     print();
     return 0;
 

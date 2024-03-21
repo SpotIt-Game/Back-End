@@ -2,7 +2,7 @@
 
 
 
-int n = 0;
+int n, id_deck, id_card;
 card input;
 
 
@@ -129,16 +129,6 @@ void expandImages(){
 
 
 
-double usedArea(){
-
-    double area = 0;
-    for(int i = 0; i<n; ++i) area += (input.imgs[i].width * input.imgs[i].height);
-    return area;
-
-}
-
-
-
 
 
 
@@ -150,21 +140,30 @@ double usedArea(){
 int main(){
 
     srand(time(NULL));
-    while(scanf("%d %Lf %Lf", &input.imgs[n].id_image, &input.imgs[n].width, &input.imgs[n].height) == 3){
+    scanf("%d %d", &id_deck, &n);
+    // printf("id_deck: %d\n", id_deck);
 
-        for(int i = 0; i<4; ++i) scanf("%Lf %Lf", &input.imgs[n].P[i].x, &input.imgs[n].P[i].y);
-        input.imgs[n].scale = 1;
-        input.imgs[n].rotate = 0;
-        scale(&input.imgs[n], (initSize)/max(input.imgs[n].width, input.imgs[n].height));
-        rotate(&input.imgs[n], random(0.0, 2*PI));
-        ++n; 
+    for(int i = 0; i<n * (n-1) + 1; ++i){
 
-    }shuffle(input.imgs, n);
-    moveToInitialPoints();
-    expandImages();
-    for(int i = 0; i<n; ++i) print(input.imgs[i]);
-    // printf("Used area: %Lf\n", usedArea());
-    return 0;
+        scanf("%d", &id_card);
+        for(int j = 0; j<n; ++j){
+
+            scanf("%d %Lf %Lf", &input.imgs[j].id_image, &input.imgs[j].width, &input.imgs[j].height);
+            for(int w = 0; w<4; ++w) scanf("%Lf %Lf", &input.imgs[j].P[w].x, &input.imgs[j].P[w].y);
+            input.imgs[j].scale = 1; 
+            input.imgs[j].rotate = 0;
+            scale(&input.imgs[j], (initSize)/max(input.imgs[j].width, input.imgs[j].height));
+            rotate(&input.imgs[j], random(0.0, 2*PI));
+            
+        }shuffle(input.imgs, n);
+        moveToInitialPoints();
+        expandImages();
+        // printf("id_card: %d\n", id_card);
+        puts("'''");
+        for(int j = 0; j<n; ++j) print(input.imgs[j]);
+        puts("''',");
+
+    }return 0;
     
 
 }

@@ -7,28 +7,35 @@ import java.nio.file.*;
 
 
 
+
+
+
 public class getDeckFromDB {
 
     static String path = "/home/danilo/SpotIT-Game/SpotIT/code/out.txt";
-    static int file = 1;
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
 
-        Connection conn = connectDB.init();
+        Connection conn = connectDB.init(); 
         List<String> lines = Files.readAllLines(Paths.get(path));
+        int id_deck = Integer.parseInt(lines.get(0)); 
+        int order = Integer.parseInt(lines.get(1));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("deck" + id_deck));
+        writer.write(id_deck + " " + order + "\n");
 
-        for(String line: lines){  
+        for(int j = 2; j < lines.size(); j += 2) {  
 
-            String[] numberStrings = line.split(" ");
+            int id_card = Integer.parseInt(lines.get(j)); 
+            String[] numberStrings = lines.get(j+1).split(" "); 
             ArrayList<Integer> row = new ArrayList<>();
-            for (int i = 0; i < numberStrings.length; i++) row.add(Integer.parseInt(numberStrings[i]));
+            for (String numberString : numberStrings) row.add(Integer.parseInt(numberString)); 
 
-            getCardFromDB card_i = new getCardFromDB(row, conn);
-            BufferedWriter writer = new BufferedWriter(new FileWriter("card" + (file++) + ".txt"));
-            for(PNG i: card_i.processImages())writer.write(i.toString());
-            writer.close();
+            getCardFromDB card_i = new getCardFromDB(row, conn); 
+            writer.write(id_card + "\n");
+            for(PNG i: card_i.processImages()) writer.write(i.toString());
+
+        }writer.close();
            
-        }
 
     }
 }
