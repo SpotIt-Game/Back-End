@@ -40,6 +40,10 @@ vector newVector(double x, double y){
 
 
 
+
+
+
+
 //random inside an interval
 double random(double min, double max){
     return min + ((double)rand()) / RAND_MAX * (max - min);
@@ -134,7 +138,7 @@ void scale(polygon * a, double factor){
     for(int i = 0; i<4; ++i){
         a->P[i].x *= factor;
         a->P[i].y *= factor;
-    }a->scale *= factor*factor;
+    }a->scale *= factor*factor; //this could change
 
 
 }
@@ -182,7 +186,6 @@ void rotateCorner(polygon *a, double radian, vector *corner) {
     }
 
 }
-
 
 
 
@@ -316,4 +319,73 @@ void shuffle(polygon *arr, int n) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+void insertImageIntoDB(int id_card, polygon * img, MYSQL * conn){
+
+    MYSQL_STMT *stmt;
+    MYSQL_BIND bind[6];
+    const char *query = "INSERT INTO image_card (id_card, id_image, x, y, scale, rotate) VALUES (?, ?, ?, ?, ?, ?);";
+    stmt = mysql_stmt_init(conn);
+    if(!stmt || mysql_stmt_prepare(stmt, query, strlen(query))){
+        puts("Error preparing the statement\n");
+        return;
+    }
+
+
+    memset(bind, 0, sizeof(bind));
+    bind[0].buffer_type = MYSQL_TYPE_LONG;
+    bind[0].buffer = &id_card;
+
+    bind[1].buffer_type = MYSQL_TYPE_LONG;
+    bind[1].buffer = &img->id_image;
+
+    char str_x[50], str_y[50], str_scale[50], str_rotate[50];
+    snprintf(str_x, sizeof(str_x), "%Lf", img->P[0].x);
+    snprintf(str_y, sizeof(str_y), "%Lf", img->P[0].y);
+    snprintf(str_scale, sizeof(str_scale), "%Lf", img->scale);
+    snprintf(str_rotate, sizeof(str_rotate), "%Lf", img->rotate);
+
+    bind[2].buffer_type = MYSQL_TYPE_STRING;
+    bind[2].buffer = str_x;
+    bind[2].buffer_length = strlen(str_x);
+
+    bind[3].buffer_type = MYSQL_TYPE_STRING;
+    bind[3].buffer = str_y;
+    bind[3].buffer_length = strlen(str_y);
+
+    bind[4].buffer_type = MYSQL_TYPE_STRING;
+    bind[4].buffer = str_scale;
+    bind[4].buffer_length = strlen(str_scale);
+
+    bind[5].buffer_type = MYSQL_TYPE_STRING;
+    bind[5].buffer = str_rotate;
+    bind[5].buffer_length = strlen(str_rotate);
+
+    if (mysql_stmt_bind_param(stmt, bind)) {
+        printf("Error binding parameters\n"); 
+        mysql_stmt_close(stmt);
+        return;
+    }
+
+    if (mysql_stmt_execute(stmt)) {
+        printf("Error executing the statement\n");
+        mysql_stmt_close(stmt);
+        return;
+    }
+
+    mysql_stmt_close(stmt);
+    printf("Image with id: %d in card %d, inserted successfully!\n", img->id_image, id_card);
+
+}
 

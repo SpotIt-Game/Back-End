@@ -189,5 +189,41 @@ int * copy(int arr[], int size){
 
 
 
+
+
+
+MYSQL * connectDB(){
+
+    MYSQL *conn;
+    char *server = "spot-it-db.cfw26wk6i0xn.us-east-2.rds.amazonaws.com";
+    char *user = "root";
+    char *password = "B3$cYZpijX>tfT+";
+    char *database = "spotit_db";
+    int port = 3306;
+    conn = mysql_init(NULL);
+    if (!conn) fprintf(stderr, "mysql_init failed\n");
+
+    if (!mysql_real_connect(conn, server, user, password, database, port, NULL, 0)) {
+        fprintf(stderr, "Error connecting to the database: %s\n", mysql_error(conn));
+        mysql_close(conn);
+    }
+
+    printf("Connected to the database successfully\n");
+    return conn;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif 
 
