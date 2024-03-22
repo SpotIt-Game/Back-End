@@ -6,7 +6,7 @@
 ```bash
 node .
 ```
-3. Cuando dé el mensaje "It's alive on http://localhost:8080" ya está listo par funcionar.
+3. Cuando dé el mensaje "It's alive on http://localhost:8080" ya está listo para funcionar.
 
 - Este funciona con POST en http://localhost:8080/spotit.
 - Si da el mensaje de error 400 "No JSON document provided" fue justamete eso.
