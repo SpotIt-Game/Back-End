@@ -69,9 +69,9 @@ void expand(polygon *a, int pol){
 void tryRotatingCenter(polygon * a, int index){
 
     polygon aux = *a;
-    for(double i = 0.0174; i<2*PI; i += 0.0174){
+    for(double i = 0.0174; i<PI; i += 0.0174){
 
-        rotate(a, i);
+        rotate(a, i, getCenter(a));
         if(!collision(a, index)) return;
 
     }*a = aux;
@@ -83,9 +83,8 @@ void tryRotatingCorners(polygon * a, int index){
 
     for(int i = 0; i<4; ++i){
         polygon aux = *a;
-        vector corner = {aux.P[i].x, aux.P[i].y};
-        for(double j = 0.0174; j<2*PI; j += 0.0174){
-            rotateCorner(&aux, j, &corner);
+        for(double j = 0.0174; j<PI; j += 0.0174){
+            rotate(&aux, j, (vector){aux.P[i].x, aux.P[i].y});
             if(!collision(&aux, index)){
                 *a = aux;
                 return;
@@ -147,7 +146,7 @@ void expandImages(){
 
 int main(){
 
-    MYSQL * conn = connectDB();
+    // MYSQL * conn = connectDB();
     srand(time(NULL));
     scanf("%d %d", &id_deck, &n);
 
@@ -161,12 +160,13 @@ int main(){
             input.imgs[j].scale = 1; 
             input.imgs[j].rotate = 0;
             scale(&input.imgs[j], (initSize)/max(input.imgs[j].width, input.imgs[j].height));
-            rotate(&input.imgs[j], random(0.0, 2*PI));
+            rotate(&input.imgs[j], random(0.0, 2*PI), getCenter(&input.imgs[j]));
             
         }shuffle(input.imgs, n);
         moveToInitialPoints();
         expandImages();
-        for(int j = 0; j<n; ++j) insertImageIntoDB(id_card, &input.imgs[j], conn);
+        printf("id_card: %d\n", id_card);
+        for(int j = 0; j<n; ++j) print(input.imgs[j]);
 
     }return 0;
     

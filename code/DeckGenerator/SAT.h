@@ -108,7 +108,7 @@ vector getCenter(polygon * a){
 //verifies if a polygon is inside a circle
 bool inside(polygon a){
     for (int i = 0; i<4; ++i)
-        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) > radio) return 0;
+        if(sqrt((a.P[i].x * a.P[i].x) + (a.P[i].y * a.P[i].y)) > radio-initSize) return 0;
     return 1;
 }
 
@@ -174,35 +174,21 @@ void move(polygon *a, vector * center){
 
 
 
-void rotateCorner(polygon *a, double radian, vector *corner) {
+void rotate(polygon *a, double radian, vector corner) {
 
-    a->rotate += radian;
+    a->rotate = fmod(radian + a->rotate, 2*PI);
     double cosTheta = cos(radian), sinTheta = sin(radian);
 
     for (int i = 0; i < 4; ++i) {
-        double x = a->P[i].x - corner->x, y = a->P[i].y - corner->y;
-        a->P[i].x = corner->x + (x * cosTheta - y * sinTheta);
-        a->P[i].y = corner->y + (x * sinTheta + y * cosTheta);
+        double x = a->P[i].x - corner.x, y = a->P[i].y - corner.y;
+        a->P[i].x = corner.x + (x * cosTheta - y * sinTheta);
+        a->P[i].y = corner.y + (x * sinTheta + y * cosTheta);
     }
 
 }
 
 
 
-//rotates a polygon by a given angle
-void rotate(polygon *a, double radian) {
-
-    vector center = getCenter(a);
-    a->rotate += radian;
-    double cosTheta = cos(radian), sinTheta = sin(radian);
-
-    for (int i = 0; i < 4; ++i) {
-        double x = a->P[i].x - center.x, y = a->P[i].y - center.y;
-        a->P[i].x = center.x + (x * cosTheta - y * sinTheta);
-        a->P[i].y = center.y + (x * sinTheta + y * cosTheta);
-    }
-
-}
 
 
 
@@ -243,7 +229,7 @@ void projectPolygon(vector axis, polygon p, int count, double *min, double *max)
 
 
 bool intervalIntersect(double minA, double maxA, double minB, double maxB) {
-    return maxA >= minB && maxB >= minA;
+    return maxA+initSize >= minB && maxB+initSize >= minA;
 }
 
 
@@ -251,9 +237,10 @@ bool intervalIntersect(double minA, double maxA, double minB, double maxB) {
 
 bool polygonIntersect(polygon a, polygon b){
 
+    double minA, minB, maxA, maxB;
     for (int i = 0; i < 4; ++i) {
+
         vector norm = normal(a.P[i], a.P[(i + 1) % 4]);
-        double minA, minB, maxA, maxB;
         projectPolygon(norm, a, 4, &minA, &maxA);
         projectPolygon(norm, b, 4, &minB, &maxB);
         if (!intervalIntersect(minA, maxA, minB, maxB)) return false;
@@ -262,7 +249,6 @@ bool polygonIntersect(polygon a, polygon b){
     for (int i = 0; i < 4; ++i){
 
         vector norm = normal(b.P[i], b.P[(i + 1) % 4]);
-        double minA, minB, maxA, maxB;
         projectPolygon(norm, a, 4, &minA, &maxA);
         projectPolygon(norm, b, 4, &minB, &maxB);
         if (!intervalIntersect(minA, maxA, minB, maxB)) return false;
@@ -296,8 +282,11 @@ bool polygonIntersect(polygon a, polygon b){
 void print(polygon curr){
     
     printf("id: %d\n", curr.id_image);
-    printf("Scale: %Lf\nRotate: %Lf\n", curr.scale, curr.rotate);
+    // printf("Scale: %Lf\nRotate: %Lf\n", curr.scale, curr.rotate);
     printf("%Lf %Lf\n", curr.P[0].x, curr.P[0].y);
+    printf("%Lf %Lf\n", curr.P[1].x, curr.P[1].y);
+    printf("%Lf %Lf\n", curr.P[2].x, curr.P[2].y);
+    printf("%Lf %Lf\n", curr.P[3].x, curr.P[3].y);
     puts("");
 
 }
