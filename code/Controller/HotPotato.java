@@ -6,7 +6,7 @@ public class HotPotato extends Game{
     //     }
 
     public HotPotato(ArrayList<Player>players){
-        super(players,0);
+        super(players);
     }
 
     
