@@ -24,23 +24,21 @@ import java.util.comparator;
 
 public abstract class Game{
     protected ArrayList<Player> players = new ArrayList<>();
-    protected boolean order; //esta variable nos indicará la manera de ganar, 1 en caso de que se gane acumulando la mayor cantidad de cartas y 0 cuando es la menor cantidad de cartas
 
-    public Game(ArrayList<Player>players, boolean order){
+    public Game(ArrayList<Player>players){
         this.players=players;
-        this.order=order
     }
 
     //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
-    public abstract void handleCoincidence();  
+    public abstract void handleCoincidence(Player p);  
 
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
-    //La funcion parece larga pero de esta forma, no hay que crear una funcion para calcular los ganadores en cada uno de los juegos.
-    public ArrayList<Player> calculateWinner(){
+    //La funcion parece larga pero de esta forma, no hay que crear una funcion para calcular los ganadores en cada uno de los juegos (excepto papa caliente).
+    public ArrayList<Player> calculateWinner(int order){
         Collections.sort(this.players, (p1, p2) -> Integer.compare(p1.getPoints(), p2.getPoints()));  //asumo que sirve (ordena de menor a mayor según el puntaje)
         int mediator;
         ArrayList<Player>winners;
-        if(this.order==true){
+        if(order==true){
             int index=this.players.size()-1;
             mediator=this.players.get(index).getPoints();
             for(int i=0;i<index+1;i++){
