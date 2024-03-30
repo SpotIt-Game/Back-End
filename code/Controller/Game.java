@@ -4,7 +4,7 @@ import java.util.*;
 
 
 
-public class Game{
+public class Game implements Result{
 
     private int level, game_mode;
     private ArrayList<Player> players = new ArrayList<>();
