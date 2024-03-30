@@ -35,17 +35,31 @@ public abstract class Game{
     public abstract void handleCoincidence();  
 
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
+    //La funcion parece larga pero de esta forma, no hay que crear una funcion para calcular los ganadores en cada uno de los juegos.
     public ArrayList<Player> calculateWinner(){
         Collections.sort(this.players, (p1, p2) -> Integer.compare(p1.getPoints(), p2.getPoints()));  //asumo que sirve (ordena de menor a mayor según el puntaje)
-        int mediator=this.players.get(0).getPoints();
+        int mediator;
         ArrayList<Player>winners;
         if(this.order==true){
-            for(int i=0;i<this.players.size();i++){
-                
+            int index=this.players.size()-1;
+            mediator=this.players.get(index).getPoints();
+            for(int i=0;i<index+1;i++){
+                if(this.players.get(index-i).getPoints()==mediator){
+                    winners.add(this.players.get(index-i));
+                } else{
+                    break;
+                }
             }
         } else{
-            
-        }
+            mediator=this.players.get(0).getPoints();
+            for(int i=0;i<this.players.size();i++){
+                if(this.players.get(i).getPoints()==mediator){
+                    winners.add(this.players.get(i));
+                } else{
+                    break;
+                }
+            }
+        } return winners;
     }
        
 }
