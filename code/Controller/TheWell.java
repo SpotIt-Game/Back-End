@@ -7,10 +7,14 @@ public class TheWell {
     //         return this.gameMode;
     //     }
 
-        @Override
-        public void handleChange(Player p){ 
-            return;
-        }
+    public TheWell(ArrayList<Player>players){
+        super(players,1);
+    }
+    
+    @Override
+    public void handleChange(Player p){ 
+        return;
+    }
 }
     
 
