@@ -32,7 +32,10 @@ public abstract class Game{
     }
 
     //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
-    public abstract void handleCoincidence(Player p);  
+    public abstract void handleCoincidence(Player p);
+    public boolean endGame(Player p){
+        
+    }
 
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
     //La funcion parece larga pero de esta forma, no hay que crear una funcion para calcular los ganadores en cada uno de los juegos.
