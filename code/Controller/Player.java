@@ -7,23 +7,22 @@ import java.util.*;
 public class Player{
 
 
-    private int pointsEarned = 0;
-    private ArrayList<Card> cards = new ArrayList<>();
-    private String playerName;
+    private int points = 0;
+    private int id_player;
 
     
     
-    public Player(String name, ArrayList<Card> cards){
-        playerName = name;
+    public Player(int id_player, ArrayList<Card> cards){
+        this.id_player = id_player;
         this.cards = cards;
     }
 
-    public String getName(){
-        return playerName;
+    public int getId_player(){
+        return id_player;
     }
 
     public int getPoints(){
-        return pointsEarned;
+        return points;
     }
 
     public boolean isEmpty(){
@@ -32,32 +31,16 @@ public class Player{
     
 
     public void updateEarned(int points){
-        this.pointsEarned += points;
+        this.points += points;
     }
     
 
-    public void push(Card a){
-        this.cards.add(a);
-    }
-
-    public Card top(){
-        return cards.get(cards.size()-1);
-    }
-
-    public void pop(){
-        cards.remove(cards.size()-1);
-    }
     
-    
-    
-
-
-
 
 
     @Override
     public int compareTo(Player otherPlayer) {
-        return Integer.compare(otherPlayer.pointsEarned, this.pointsEarned);
+        return Integer.compare(otherPlayer.points, this.points);
     }
 
     
