@@ -34,7 +34,7 @@ public abstract class Game{
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
     public ArrayList<Player> calculateWinner(){
         int mediator=this.players.get(0).getPoints();
-        Collections.sort(this.players);
+        Collections.sort(this.players); 
         ArrayList<Player>winners;
         if(this.order==true){
             for(int i=0;i<this.players.size();i++){
