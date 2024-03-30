@@ -24,7 +24,7 @@ import java.util.comparator;
 
 public abstract class Game{
     protected ArrayList<Player> players = new ArrayList<>();
-    protected boolean order
+    protected boolean order; //el orden me dirá la manera de ganar el juego, 1 será es acumulando la mayor cantidad de cartas, 0 si es la menor cantidad de cartas
 
     public Game(ArrayList<Player>players, boolean order){
         this.players=players;
