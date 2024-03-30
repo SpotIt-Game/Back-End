@@ -33,8 +33,10 @@ public abstract class Game{
 
     //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
     public abstract void handleCoincidence(Player p);
+
+    //El juego termina cuando un ugador se quedó sin cartas, en caso de que un modo de juego no funcione así, se le hará Override
     public boolean endGame(Player p){
-        
+        return p.isEmpty();
     }
 
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
