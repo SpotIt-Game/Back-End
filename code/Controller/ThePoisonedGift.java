@@ -7,5 +7,10 @@ public class ThePoisonedGift{
         public int getgameMode(){
             return this.gameMode;
         }
+
+        @Override
+        public void handleChange(Player p){ 
+            return;
+        }
 }
 
