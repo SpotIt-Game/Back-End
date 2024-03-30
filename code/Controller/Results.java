@@ -1,6 +1,6 @@
 import java.util.*;
 
-
+//OPINIÓN: Clase que quedará obsoleta y tendrá que ser eliminada.
 
 public class Results {
     
