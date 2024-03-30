@@ -8,7 +8,7 @@ public class TheWell {
     //     }
 
     public TheWell(ArrayList<Player>players){
-        super(players,1);
+        super(players,0);
     }
     
     @Override
