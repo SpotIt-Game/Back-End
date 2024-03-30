@@ -6,12 +6,11 @@ import java.util.*;
 
 public class Player{
 
-    
+
     private int pointsEarned = 0;
     private ArrayList<Card> cards = new ArrayList<>();
     private String playerName;
 
-    
     
     
     public Player(String name, ArrayList<Card> cards){
@@ -28,6 +27,30 @@ public class Player{
     }
 
 
+    
+
+    public void updateEarned(int points){
+        this.pointsEarned += points;
+    }
+    
+
+    public void push(Card a){
+        this.cards.add(a);
+    }
+
+    public Card top(){
+        return cards.get(cards.size()-1);
+    }
+
+    public void pop(){
+        cards.remove(cards.size()-1);
+    }
+    
+    
+    
+
+
+
 
 
     @Override
@@ -36,16 +59,7 @@ public class Player{
     }
 
     
-    
 
 
-    public void updateEarned(int points){
-        this.pointsEarned += points;
-    }
-    
-    
-// Método para aumentar los puntos si hay una coincidencia.
-// Método para actualizar la carta actual del jugador cuando hay una coincidencia.
-// Método para obtener el nombre del jugador y sus puntos.
 
 }
