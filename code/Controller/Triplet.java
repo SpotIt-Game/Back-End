@@ -7,6 +7,10 @@ public class Triplet { //creo que esto ya no haría falta almenos para esta clas
     //         return this.gameMode;
     //     }
 
+    public Triplet(ArrayList<Player>players){
+        super(players,1);
+    }
+    
     @Override
     public void handleChange(Player p){ 
         return;
