@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.comparator; 
 
 // public class Game implements Result{
 
@@ -19,6 +20,8 @@ import java.util.*;
 //JUSTIFICACIÓN: En game manipularemos el juego pero necesitamos otra clase que sea "La clase dios" la cuál maneje el nivel y el modo de juego y en base a ella,
 //instanciarémos un juego y lo manipularémos.
 
+
+
 public abstract class Game{
     protected ArrayList<Player> players = new ArrayList<>();
     protected boolean order; //esta variable nos indicará la manera de ganar, 1 en caso de que se gane acumulando la mayor cantidad de cartas y 0 cuando es la menor cantidad de cartas
@@ -34,7 +37,7 @@ public abstract class Game{
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
     public ArrayList<Player> calculateWinner(){
         int mediator=this.players.get(0).getPoints();
-        Collections.sort(this.players); 
+        Collections.sort(this.players, (p1, p2) -> Integer.compare(p1.getPoints(), p2.getPoints()));  //asumo que sirve (ordena de menor a mayor según el puntaje)
         ArrayList<Player>winners;
         if(this.order==true){
             for(int i=0;i<this.players.size();i++){
