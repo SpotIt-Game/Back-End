@@ -7,6 +7,10 @@ public class Tower {
     //     return this.gameMode;
     // }
 
+    public Tower(ArrayList<Player>players){
+        super(players,1)
+    }
+    
     @Override
     public void handleChange(Player p){ 
         return;
