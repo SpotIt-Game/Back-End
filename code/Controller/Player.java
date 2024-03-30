@@ -26,7 +26,9 @@ public class Player{
         return pointsEarned;
     }
 
-
+    public boolean isEmpty(){
+        return this.cards.size()==0;
+    }
     
 
     public void updateEarned(int points){
