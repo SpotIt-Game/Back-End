@@ -8,9 +8,13 @@ public class ThePoisonedGift{
     //         return this.gameMode;
     //     }
 
-        @Override
-        public void handleChange(Player p){ 
-            return;
-        }
+    public ThePoisonedGift(ArrayList<Player>players){
+        super(players,0);
+    }
+    
+    @Override
+    public void handleChange(Player p){ 
+        return;
+    }
 }
 
