@@ -21,14 +21,27 @@ import java.util.*;
 
 public abstract class Game{
     protected ArrayList<Player> players = new ArrayList<>();
-    protected boolean order; //esta variable nos indicará la manera de ganar, 0 en caso de que se gane acumulando la mayor cantidad de cartas y 1 cuando es la menor cantidad de cartas
+    protected boolean order; //esta variable nos indicará la manera de ganar, 1 en caso de que se gane acumulando la mayor cantidad de cartas y 0 cuando es la menor cantidad de cartas
 
     public Game(ArrayList<Player>players, boolean order){
         this.players=players;
         this.order=order
     }
-    
-    public abstract void handleCoincidence();  //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
-    public abstract void calculateWinner();  //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
+
+    //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
+    public abstract void handleCoincidence();  
+
+     //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
+    public ArrayList<Player> calculateWinner(){
+        int mediator=this.players.get(0).getPoints();
+        ArrayList<Player>winners;
+        if(this.order==true){
+            for(int i=0;i<this.players.size();i++){
+                
+            }
+        } else{
+            
+        }
+    }
        
 }
