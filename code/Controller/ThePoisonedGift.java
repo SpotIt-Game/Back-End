@@ -2,7 +2,7 @@ import java.util.*;
 
 
 public class ThePoisonedGift{
-    private int gameMode =  5;
+    private int gameMode =  5; //creo que esto ya no haría falta almenos para esta clase
 
         public int getgameMode(){
             return this.gameMode;
