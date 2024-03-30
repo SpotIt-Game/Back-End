@@ -16,11 +16,17 @@ import java.util.*;
 // }
 
 
-public abstract class Game{
+//JUSTIFICACIÓN: En game manipularemos el juego pero necesitamos otra clase que sea "La clase dios" la cuál maneje el nivel y el modo de juego y en base a ella,
+//instanciarémos un juego y lo manipularémos.
 
+public abstract class Game{
+    protected ArrayList<Player> players = new ArrayList<>();
+
+    public Game(ArrayList<Player>players){
+        this.players=players;
+    }
+    
     public abstract void handleCoincidence();  //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
-    public void cacularGanador();  //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es
-    
-    
-    
+    public abstract void cacularGanador();  //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
+       
 }
