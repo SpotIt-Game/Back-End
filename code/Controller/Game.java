@@ -18,6 +18,9 @@ import java.util.*;
 
 public abstract class Game{
 
+    public abstract void handleCoincidence();  //este método dependiendo del juego hará cambios en el mazo del jugador o jugadores
+    public void cacularGanador();  //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es
+    
     
     
 }
