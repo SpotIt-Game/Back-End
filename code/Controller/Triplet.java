@@ -1,10 +1,15 @@
 import java.util.*;
 
 public class Triplet { //creo que esto ya no haría falta almenos para esta clase
-    private int gameMode =   4;
+    // private int gameMode =   4;
 
-        public int getgameMode(){
-            return this.gameMode;
-        }
+    //     public int getgameMode(){
+    //         return this.gameMode;
+    //     }
+
+    @Override
+    public void handleChange(Player p){ 
+        return;
+    }
 }
 
