@@ -3,6 +3,7 @@ import java.net.*;
 import java.io.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import netscape.javascript.JSException;
 
 
 
@@ -16,20 +17,10 @@ java -cp .:lib/gson-2.8.8.jar Main
 
 public class Main{
 
-
-    
-
-    public boolean equals(String url1, String url2){
-        return url1.equals(url2);
-    }
+    private static Game game_mode;
+    private static ArrayList<Integer> players = new ArrayList<>();
 
 
-
-
-
-
-
-    
 
     public static void sendData(URL url, String jsonBody) throws Exception{
 
@@ -47,7 +38,7 @@ public class Main{
     }
 
 
-    public static void receiveData(URL url) throws Exception{
+    public static JsonObject receiveData(URL url) throws Exception { 
         
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -56,31 +47,53 @@ public class Main{
         String line;
         while ((line = reader.readLine()) != null) responseBuilder.append(line);
         String jsonResponse = responseBuilder.toString();
-        System.out.println("Respuesta del servidor JavaScript: " + jsonResponse);
+        JsonObject jsonObject = new Gson().fromJson(jsonResponse,JsonObject.class);
         connection.disconnect();
-        
+        return jsonObject;
+
     }
 
 
     
 
+//return print();
+//no sé usar switch :c es para gente trash.
+    public static void main(String[] args) throws Exception {
 
 
+        URL url = new URL("http://localhost:9000/");
+        JsonObject jsonGod = receiveData(url);
+        int move = jsonGod.get("move").getAsInt();
 
+        
+        if(move == 1){
+            
+            game_mode = new Game(jsonGod.get("game_mode").getAsInt());
+            JsonArray arr = jsonGod.get("players").getAsJsonArray();
+            for(JsonElement p: arr) players.add(new Player(p.getAsInt()));
+            
+        }else if(move == 2){
+            
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("booleano", game_mode.verifyMove(jsonGod.get("urls").getAsJsonArray()));
+            String jsonString = new Gson().toJson(jsonObject);
+            sendData(url,jsonString);
+            
+        }else{
+            
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("Winners", game_mode.calculateWinner(players));
+            String jsonString = new Gson().toJson(jsonObject);
+            sendData(url,jsonString);
 
-
-    public static void main(String[] args) throws Exception{
-
-        //sendData(new URL("http://localhost:9000/"), "{\"booleano\": true}");
-        receiveData(new URL("http://localhost:9000/"));
-      
+        }
 
     }   
 
     
 }
 
-    
+
     
 
 

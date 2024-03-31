@@ -2,19 +2,13 @@ import java.util.*;
 
 
 
-
-
-public class Player{
-
+public class Player implements Comparable<Player> {
 
     private int points = 0;
     private int id_player;
-
     
-    
-    public Player(int id_player, ArrayList<Card> cards){
+    public Player(int id_player){
         this.id_player = id_player;
-        this.cards = cards;
     }
 
     public int getId_player(){
@@ -22,29 +16,16 @@ public class Player{
     }
 
     public int getPoints(){
-        return points;
+        return Math.abs(points);
     }
-
-    public boolean isEmpty(){
-        return this.cards.size()==0;
-    }
-    
 
     public void updateEarned(int points){
         this.points += points;
     }
-    
-
-    
-
 
     @Override
     public int compareTo(Player otherPlayer) {
-        return Integer.compare(otherPlayer.points, this.points);
+        return Integer.compare(otherPlayer.getPoints(), getPoints());
     }
-
-    
-
-
 
 }
