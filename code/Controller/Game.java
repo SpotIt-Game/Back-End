@@ -23,6 +23,7 @@ import java.util.comparator;
 
 
 public abstract class Game{
+    
     protected ArrayList<Player> players = new ArrayList<>();
     protected boolean order; //el orden me dirá la manera de ganar el juego, 1 será es acumulando la mayor cantidad de cartas, 0 si es la menor cantidad de cartas
 
@@ -35,14 +36,12 @@ public abstract class Game{
     public abstract void handleCoincidence(Player p);
 
     //El juego termina cuando un ugador se quedó sin cartas, en caso de que un modo de juego no funcione así, se le hará Override
-    public boolean endGame(Player p){
-        return p.isEmpty();
-    }
+    public abstract boolean endGame();
 
      //este método me dirá quien va ganando según el modo de juego ya que en algunos tener más cartas es bueno mientras que en otro no lo es.
     //La funcion parece larga pero de esta forma, no hay que crear una funcion para calcular los ganadores en cada uno de los juegos.
     public ArrayList<Player> calculateWinner(){
-        Collections.sort(this.players, (p1, p2) -> Integer.compare(p1.getPoints(), p2.getPoints()));  //asumo que sirve (ordena de menor a mayor según el puntaje)
+        Collections.sort(this.players);  //asumo que sirve (ordena de menor a mayor según el puntaje)
         int mediator;
         ArrayList<Player>winners;
         if(this.order==true){

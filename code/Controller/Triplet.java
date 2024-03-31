@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Triplet { //creo que esto ya no haría falta almenos para esta clase
+public class Triplet extends Game{ //creo que esto ya no haría falta almenos para esta clase
     // private int gameMode =   4;
 
     //     public int getgameMode(){
@@ -11,6 +11,9 @@ public class Triplet { //creo que esto ya no haría falta almenos para esta clas
         super(players,1);
     }
     
+
+
+
     @Override
     public void handleChange(Player p){ 
         return;
