@@ -1,0 +1,59 @@
+{
+  "nombre": "Juan",
+  "edad": 30,
+  "activo": true,
+  "direcciones": [
+    {
+      "calle": "Calle Principal",
+      "ciudad": "Ciudad Principal"
+    },
+    {
+      "calle": "Calle Secundaria",
+      "ciudad": "Ciudad Secundaria"
+    }
+  ]
+}
+
+
+
+
+// Objeto JSON como cadena
+String jsonString = "{\"nombre\":\"Juan\",\"edad\":30,\"activo\":true,\"direcciones\":[{\"calle\":\"Calle Principal\",\"ciudad\":\"Ciudad Principal\"},{\"calle\":\"Calle Secundaria\",\"ciudad\":\"Ciudad Secundaria\"}]}";
+
+
+
+
+// Convertir la cadena JSON a un objeto JsonObject
+JsonObject jsonObject = new Gson().fromJson(jsonString, JsonObject.class);
+
+
+
+
+
+// Acceder a los valores del objeto JSON
+String nombre = jsonObject.get("nombre").getAsString();
+int edad = jsonObject.get("edad").getAsInt();
+boolean activo = jsonObject.get("activo").getAsBoolean();
+JsonArray direcciones = jsonObject.getAsJsonArray("direcciones");
+
+
+
+
+
+// Imprimir los valores
+System.out.println("Nombre: " + nombre);
+System.out.println("Edad: " + edad);
+System.out.println("Activo: " + activo);
+
+
+
+
+
+// Iterar sobre las direcciones
+System.out.println("Direcciones:");
+for (JsonElement elemento : direcciones) {
+    JsonObject direccion = elemento.getAsJsonObject();
+    String calle = direccion.get("calle").getAsString();
+    String ciudad = direccion.get("ciudad").getAsString();
+    System.out.println("- Calle: " + calle + ", Ciudad: " + ciudad);
+}
