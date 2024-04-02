@@ -61,21 +61,14 @@ public class Main{
         URL url = new URL("http://localhost:9000/move2/");
         JsonObject jsonGod = receiveData(url);                                                //if api wants to create a new game
         int move = jsonGod.get("move").getAsInt();
+        int id_lobby = jsonGod.get("id_lobby").getAsInt();
 
+        if(move == 1) lobbies.put(id_lobby, new Lobby(jsonGod)); 
+
+        else if(move == 2) sendData(url, new Gson().toJson(lobbies.get(id_lobby).verifyMove(jsonGod)));
+            
+        else sendData(url, new Gson().toJson(lobbies.get(id_lobby).calculateWinner(jsonGod)));
         
-        if(move == 1) lobbies.add(new Lobby(jsonGod)); 
-
-        else if(move == 2){
-            
-            int id_lobby = jsonGod.get("id_lobby").getAsInt();
-            sendData(url, new Gson().toJson(lobbies.get(id_lobby).verifyMove(jsonGod)));
-            
-        } else{ 
-
-            int id_lobby = jsonGod.get("id_lobby").getAsInt();
-            sendData(url, new Gson().toJson(lobbies.get(id_lobby).calculateWinner(jsonGod)));
-    
-        }
     
     }   
 }
