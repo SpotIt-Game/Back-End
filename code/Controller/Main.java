@@ -1,15 +1,20 @@
 import java.util.*;
+import javax.print.attribute.standard.JobImpressionsCompleted;
 import java.net.*;
 import java.io.*;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import netscape.javascript.JSException;
 
 
 
+
+
 /*
-javac -cp .:lib/gson-2.8.8.jar Main.java
-java -cp .:lib/gson-2.8.8.jar Main
+
+export CLASSPATH=lib/gson-2.8.8.jar:.
+javac *.java
+java Main
+
 */
 
 
@@ -18,9 +23,7 @@ java -cp .:lib/gson-2.8.8.jar Main
 public class Main{
 
     private static Game game_mode;
-    private static ArrayList<Integer> players = new ArrayList<>();
-
-
+    private static ArrayList<Player> players = new ArrayList<>();
 
     public static void sendData(URL url, String jsonBody) throws Exception{
 
@@ -54,47 +57,58 @@ public class Main{
     }
 
 
-    
 
-//return print();
-//no sé usar switch :c es para gente trash.
+
     public static void main(String[] args) throws Exception {
 
 
-        URL url = new URL("http://localhost:9000/");
-        JsonObject jsonGod = receiveData(url);
+        URL url = new URL("http://localhost:9000/move1/");
+        JsonObject jsonGod = receiveData(url);                                                //if api wants to create a new game
         int move = jsonGod.get("move").getAsInt();
-
         
-        if(move == 1){
+        if(move == 1){                                                                          
             
             game_mode = new Game(jsonGod.get("game_mode").getAsInt());
             JsonArray arr = jsonGod.get("players").getAsJsonArray();
             for(JsonElement p: arr) players.add(new Player(p.getAsInt()));
+
+        }else if(move == 2){                                                                     //if api, wants to verify a move
             
-        }else if(move == 2){
+            ArrayList<String> list = new ArrayList<>();
+            for(JsonElement e : jsonGod.getAsJsonArray("urls")) list.add(e.getAsString());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("booleano", game_mode.verifyMove(list, players.get(jsonGod.get("player").getAsInt()))); 
+            sendData(url, new Gson().toJson(jsonObject));
+            
+        }else{                                                                                   //if api wants to end a game
             
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("booleano", game_mode.verifyMove(jsonGod.get("urls").getAsJsonArray()));
-            String jsonString = new Gson().toJson(jsonObject);
-            sendData(url,jsonString);
-            
-        }else{
-            
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("Winners", game_mode.calculateWinner(players));
-            String jsonString = new Gson().toJson(jsonObject);
-            sendData(url,jsonString);
+            JsonArray arr = new JsonArray();
+            for(Player p : game_mode.calculateWinner(players))
+                arr.add(p.getId_player());
+            jsonObject.add("Winners",arr);
+            sendData(url, new Gson().toJson(jsonObject));
 
         }
 
     }   
 
-    
 }
 
 
-    
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

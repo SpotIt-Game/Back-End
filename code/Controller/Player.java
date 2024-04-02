@@ -28,4 +28,11 @@ public class Player implements Comparable<Player> {
         return Integer.compare(otherPlayer.getPoints(), getPoints());
     }
 
+    @Override
+    public String toString(){
+        return "" + id_player + "";
+    }
+
+
+
 }

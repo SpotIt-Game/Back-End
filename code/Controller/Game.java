@@ -1,11 +1,7 @@
 import java.util.*;
 import java.net.*;
 import java.io.*;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-
-
-
+import com.google.gson.*;
 
 
 
@@ -14,7 +10,7 @@ import com.google.gson.JsonElement;
 public class Game{
     
     
-    private boolean order; //1 si se gana acumulando la mayor cantidad de cartas, 0 si es acumulando la menor cantidad de cartas
+    private boolean order; 
 
 
     public Game(int game_mode){
@@ -22,11 +18,12 @@ public class Game{
     }
 
 
-    public boolean verifyMove(JsonArray arr, Player curr){
+    public boolean verifyMove(ArrayList<String> arr, Player curr){
         
-        String url = arr.get(0).getAsString();
-        for(JsonElement element : arr)
-            if(!url.equals(element.getAsString())) return false;
+        String url = arr.get(0);
+        for(String element : arr)
+            if(!url.equals(element)) 
+                return false;
         
         curr.updateEarned((order)? 1: -1);
         return true;
@@ -44,6 +41,9 @@ public class Game{
         return winners;
 
     }
+
+
+
 
 
 

@@ -27,12 +27,7 @@
             {"link": "..."}
         ]
 
-        "players": [
-            {"id_player": 1},
-            {"id_player": 2},
-            ...
-            {"id_player": n}
-        ]
+        "player": x
 
     }
     

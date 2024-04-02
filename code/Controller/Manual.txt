@@ -16,6 +16,16 @@
 
 
 
+{
+  "arreglo_de_strings": [
+    "cadena1",
+    "cadena2",
+    "cadena3"
+  ]
+}
+
+
+
 
 // Objeto JSON como cadena
 String jsonString = "{\"nombre\":\"Juan\",\"edad\":30,\"activo\":true,\"direcciones\":[{\"calle\":\"Calle Principal\",\"ciudad\":\"Ciudad Principal\"},{\"calle\":\"Calle Secundaria\",\"ciudad\":\"Ciudad Secundaria\"}]}";
@@ -57,3 +67,30 @@ for (JsonElement elemento : direcciones) {
     String ciudad = direccion.get("ciudad").getAsString();
     System.out.println("- Calle: " + calle + ", Ciudad: " + ciudad);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const data = {  
+
+    move: 2,
+    player: 1,
+    urls : [
+        "hola",
+        "adios",        
+        "hola",    
+    ]
+
+};
