@@ -22,6 +22,7 @@ const data = {
 
     move: 2,
     player: 1,
+    id_lobby: 1,
     urls : [
         "hola",
         "adios",        
@@ -53,11 +54,11 @@ app.get('/move2', (req, res) => {
 
 
 app.post('/move2', (req, res) => {     //Recordar que esto de ejecutará si sucede en http://localhost:9000/move2/
-    const { booleano } = req.body;
+    const { valid } = req.body;
 
-    console.log("Valor booleano recibido:", booleano);
+    console.log("Valor valid recibido:", valid);
 
-    if (booleano === true) {
+    if (valid === true) {
         console.log("true!");
         res.send('<h1>¡Verdadero!</h1>');
     } else {
@@ -65,6 +66,9 @@ app.post('/move2', (req, res) => {     //Recordar que esto de ejecutará si suce
         res.send('<h1>Falso</h1>');
     }
 });
+
+
+
 
 
 app.post('/move3', (req, res) => {

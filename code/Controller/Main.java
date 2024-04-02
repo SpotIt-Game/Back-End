@@ -6,24 +6,11 @@ import com.google.gson.*;
 import netscape.javascript.JSException;
 
 
-
-
-
-/*
-
-export CLASSPATH=lib/gson-2.8.8.jar:.
-javac *.java
-java Main
-
-*/
-
-
-
-
 public class Main{
 
-    private static Game game_mode;
-    private static ArrayList<Player> players = new ArrayList<>();
+
+    public static Map<Integer, Lobby> lobbies = new HashMap<>();
+
 
     public static void sendData(URL url, String jsonBody) throws Exception{
 
@@ -57,58 +44,40 @@ public class Main{
     }
 
 
+    public Lobby getLobby(int i){
+        return lobbies.get(i);
+    }
+    
+
+
+
+
+    
 
 
     public static void main(String[] args) throws Exception {
-
-
-        URL url = new URL("http://localhost:9000/move1/");
+    
+    
+        URL url = new URL("http://localhost:9000/move2/");
         JsonObject jsonGod = receiveData(url);                                                //if api wants to create a new game
         int move = jsonGod.get("move").getAsInt();
+
         
-        if(move == 1){                                                                          
-            
-            game_mode = new Game(jsonGod.get("game_mode").getAsInt());
-            JsonArray arr = jsonGod.get("players").getAsJsonArray();
-            for(JsonElement p: arr) players.add(new Player(p.getAsInt()));
+        if(move == 1) lobbies.add(new Lobby(jsonGod)); 
 
-        }else if(move == 2){                                                                     //if api, wants to verify a move
+        else if(move == 2){
             
-            ArrayList<String> list = new ArrayList<>();
-            for(JsonElement e : jsonGod.getAsJsonArray("urls")) list.add(e.getAsString());
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("booleano", game_mode.verifyMove(list, players.get(jsonGod.get("player").getAsInt()))); 
-            sendData(url, new Gson().toJson(jsonObject));
+            int id_lobby = jsonGod.get("id_lobby").getAsInt();
+            sendData(url, new Gson().toJson(lobbies.get(id_lobby).verifyMove(jsonGod)));
             
-        }else{                                                                                   //if api wants to end a game
-            
-            JsonObject jsonObject = new JsonObject();
-            JsonArray arr = new JsonArray();
-            for(Player p : game_mode.calculateWinner(players))
-                arr.add(p.getId_player());
-            jsonObject.add("Winners",arr);
-            sendData(url, new Gson().toJson(jsonObject));
+        } else{ 
 
+            int id_lobby = jsonGod.get("id_lobby").getAsInt();
+            sendData(url, new Gson().toJson(lobbies.get(id_lobby).calculateWinner(jsonGod)));
+    
         }
-
+    
     }   
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
