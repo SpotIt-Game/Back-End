@@ -1,9 +1,10 @@
 package com.Server.ec2server.Model;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-import com.google.gson.*;
+import java.util.ArrayList;
 
 
 
@@ -54,13 +55,19 @@ public class Lobby{
     }
 
 
-
-
-
-
-    public int getId_Lobby(){
-        return this.id_lobby;
+    @Override
+    public String toString() {
+        return "Lobby{" +
+                "id_lobby=" + id_lobby +
+                ", game_mode=" + game_mode +
+                ", players=" + players +
+                '}';
     }
+
+
+
+
+
 
 }
 

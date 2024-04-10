@@ -1,7 +1,4 @@
 package com.Server.ec2server.Model;
-import java.util.*;
-
-
 
 public class Player implements Comparable<Player> {
 

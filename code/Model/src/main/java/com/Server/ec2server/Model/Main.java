@@ -1,13 +1,13 @@
 package com.Server.ec2server.Model;
+import com.Server.ec2server.util.ExpiringHashMap;
+import com.google.gson.JsonObject;
 
-import java.util.*;
-import com.google.gson.*;
 
 public class Main {
 
     private static Main main;
 
-    private Map<Integer, Lobby> lobbies = new HashMap<>();
+    private ExpiringHashMap<Integer, Lobby> lobbies = new ExpiringHashMap<>();
 
     private Main() {}
 
@@ -29,6 +29,7 @@ public class Main {
         else{
             json = lobbies.get(id_lobby).calculateWinner(jsonGod);
             lobbies.remove(id_lobby);
+
         }return json;
 
     }
