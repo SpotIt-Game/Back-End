@@ -1,9 +1,9 @@
 package com.Model;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.util.ExpiringHashMap;
 
+import javax.naming.InterruptedNamingException;
 import java.util.ArrayList;
 
 
@@ -37,7 +37,7 @@ public class Lobby{
         ArrayList<String> list = new ArrayList<>();
         for(JsonElement e : json.getAsJsonArray("urls")) list.add(e.getAsString());
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("valid", game_mode.verifyMove(list, players.get(json.get("player").getAsInt()-1)));
+        jsonObject.addProperty("valid", game_mode.verifyMove(list, players.get(json.get("player").getAsInt())));
         return jsonObject;
 
     }
@@ -55,19 +55,16 @@ public class Lobby{
     }
 
 
-    @Override
-    public String toString() {
-        return "Lobby{" +
-                "id_lobby=" + id_lobby +
-                ", game_mode=" + game_mode +
-                ", players=" + players +
-                '}';
+    public JsonObject toJson() {
+
+        JsonObject json = new JsonObject();
+        json.addProperty("id_lobby", id_lobby);
+        json.addProperty("game_mode", game_mode.getGameMode());
+        JsonArray playersArray = new JsonArray();
+        for (Player player : players) playersArray.add(player.getId_player());
+        json.add("players", playersArray);
+        return json;
+
     }
-
-
-
-
-
-
 }
 

@@ -11,10 +11,12 @@ public class Game{
 
 
     private boolean order;
+    private int game_mode;
 
 
     public Game(int game_mode){
         this.order = (game_mode == 1 || game_mode == 4);
+        this.game_mode = game_mode;
     }
 
 
@@ -40,6 +42,11 @@ public class Game{
             winners.add(players.get(i));
         return winners;
 
+    }
+
+
+    public int getGameMode(){
+        return game_mode;
     }
 
 

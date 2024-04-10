@@ -1,6 +1,6 @@
 package com.Model;
 import com.util.ExpiringHashMap;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 
 
 public class Main {
@@ -16,21 +16,39 @@ public class Main {
         return main;
     }
 
-    public JsonObject handleRequest(JsonObject jsonGod){
 
-        JsonObject json = new JsonObject();
-        if(jsonGod == null) return json;
-        int move = jsonGod.get("move").getAsInt();
-        int id_lobby = jsonGod.get("id_lobby").getAsInt();
+
+    private JsonObject initEndVerify(int move, JsonObject jsonGod, JsonObject json){
+
         json.addProperty("move", move);
-
+        int id_lobby = jsonGod.get("id_lobby").getAsInt();
         if (move == 1) lobbies.put(id_lobby, new Lobby(jsonGod));
         else if (move == 2) json = lobbies.get(id_lobby).verifyMove(jsonGod);
         else{
             json = lobbies.get(id_lobby).calculateWinner(jsonGod);
             lobbies.remove(id_lobby);
-
         }return json;
+
+    }
+
+
+    private JsonObject showLobbies(JsonObject json) {
+
+        JsonArray lobbiesArray = new JsonArray();
+        for (Lobby lobby : lobbies.values()) lobbiesArray.add(lobby.toJson());
+        json.add("lobbies", lobbiesArray);
+        return json;
+
+    }
+
+
+
+    public JsonObject handleRequest(JsonObject jsonGod){
+
+        JsonObject json = new JsonObject();
+        if(jsonGod == null) return json;
+        int move = jsonGod.get("move").getAsInt();
+        return (move > 3)? showLobbies(json) : initEndVerify(move, jsonGod, json);
 
     }
 
